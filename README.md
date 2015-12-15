@@ -4,11 +4,11 @@ A multiscale model of mouse primary motor cortex (M1).
 
 The code is based on a NEURON/Python-based modularized framework for network simulations with MPI. Using this modularized structure, user can define different models (including cell types, populations, connectivities, etc.) just by modifying a single parameters file. Additionally, the framework allows to store a single data file the following:
 
-1. model specifications (conn rules etc), 
-2. network instantiation (list of all cells, connections, etc), 
-3. simulation parameter (duration, dt, etc) and output spikes. 
+1. model specifications (conn rules etc)
+2. network instantiation (list of all cells, connections, etc)
+3. simulation parameters/configuration (duration, dt, etc) and output spikes
 
-The data file is available in Pickle, JSON and Matlab formats
+The data file is available in Pickle, JSON and Matlab formats.
 
 Two example models are provided: 
 
@@ -37,7 +37,7 @@ Requires NEURON with Python and MPI support.
 
 ## Overview of file structure:
 
-* **sim/init.py**: Main executable; calls functions from other modules. Sets what parameter file to use.
+* **/sim/init.py**: Main executable; calls functions from other modules. Sets what parameter file to use.
 
 * **/params**: Contains a single parameters file to define each model. Includes simulation (simConfig) and network (netParams) parameters. 
 
