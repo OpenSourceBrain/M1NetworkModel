@@ -52,6 +52,8 @@ Requires NEURON with Python and MPI support.
 
 * **/sim/analysis.py**: functions to visualize and analyse data
 
+* **/sim/cells/izhi2007.py**: Python class (wrapper) for Izhikevich 2007 neuron model
+
 * **/sim/mod/izhi2007b.mod**: NMODL definition of Izhikevich 2007 neuron model
 
 * /**data**: where the model and simulation data is stored (eg. .pkl, .mat, .json files) 
