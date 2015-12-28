@@ -9,9 +9,3 @@ shift # Eliminate first argument
 
 mpiexec -np $numprocesses nrniv -python -mpi init.py $@ # Run the model
 
-# If on a local host, plot
-#if [ -n "$DISPLAY" ]; then
-#   if [ $HOSTNAME=="mompou" ]; then
-#       python fileraster.py
-#   fi
-#fi

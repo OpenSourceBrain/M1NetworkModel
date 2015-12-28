@@ -1,5 +1,5 @@
 """
-params file
+params.py 
 
 netParams is a dict containing a set of network parameters using a standardized structure
 
@@ -9,6 +9,7 @@ Contributors: salvadordura@gmail.com
 """
 
 from pylab import array
+from utils import importCell
 
 netParams = {}  # dictionary to store sets of network parameters
 simConfig = {}  # dictionary to store sets of simulation configurations
@@ -42,69 +43,53 @@ netParams['toroidal'] = False  # Whether or not to have toroidal topology
 netParams['cellProps'] = []
 
 ## IT cell params
-cellProp = {'label': 'IT', 'conditions': {'cellType': 'IT'}, 'sections': {}}
-soma = {'geom': {}, 'topol': {}, 'mechs': {}, 'syns': {}, 'Izhi2007Type': 'RS'}  #  soma
-soma['geom'] = {'diam': 14.0, 'L': 14.0}
-soma['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-#soma['syns']['NMDA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 5, 'tau2':50, 'e': 0}  # NMDA
-soma['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-#soma['syns']['NMDA'] = {'type': 'ExpSyn', 'loc': 0.5, 'tau': 0.1, 'e': 0}  # NMDA
-soma['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-soma['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-#soma['syns']['GABAB'] = {'type': 'GABAB', 'loc': 0.5} #, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-cellProp['sections'] = {'soma': soma}  # add sections to dict
+cellProp = {'label': 'IT', 'conditions': {'cellType': 'IT'}, 'sections': {}, 'pointNeuron': {}}
+cellProp['sections'], cellProp['pointNeuron'] = importCell(
+    fileName='cells/izhi2007.py', cellName='IzhiCell',  type='RS', pointNeuronParamLabels='paramLabels')
+cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
+cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
+cellProp['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
+cellProp['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
 netParams['cellProps'].append(cellProp)  # add dict to list of cell properties
 
 ## PT cell params
-cellProp = {'label': 'PT', 'conditions': {'cellType': 'PT'}, 'sections': {}}
-soma = {'geom': {}, 'topol': {}, 'mechs': {}, 'syns': {}, 'Izhi2007Type': 'IB'}  #  soma
-soma['geom'] = {'diam': 14.0, 'L': 18.0}  # From Suter,2013 Fig1D
-soma['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-soma['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-#soma['syns']['NMDA'] = {'type': 'ExpSyn', 'loc': 0.5, 'tau': 0.1, 'e': 0}  # NMDA
-soma['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-soma['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-#soma['syns']['GABAB'] = {'type': 'GABAB', 'loc': 0.5} #, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-cellProp['sections'] = {'soma': soma}  # add sections to dict
+cellProp = {'label': 'PT', 'conditions': {'cellType': 'PT'}, 'sections': {}, 'pointNeuron': {}}
+cellProp['sections'], cellProp['pointNeuron'] = importCell(
+    fileName='cells/izhi2007.py', cellName='IzhiCell',  type='RS', pointNeuronParamLabels='paramLabels')
+cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
+cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
+cellProp['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
+cellProp['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
 netParams['cellProps'].append(cellProp)  # add dict to list of cell properties
 
 ## CT cell params
-cellProp = {'label': 'CT', 'conditions': {'cellType': 'CT'}, 'sections': {}}
-soma = {'geom': {}, 'topol': {}, 'mechs': {}, 'syns': {}, 'Izhi2007Type': 'RS'}  #  soma
-soma['geom'] = {'diam': 14.0, 'L': 14.0}
-soma['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-soma['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-#soma['syns']['NMDA'] = {'type': 'ExpSyn', 'loc': 0.5, 'tau': 0.1, 'e': 0}  # NMDA
-soma['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-soma['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-#soma['syns']['GABAB'] = {'type': 'GABAB', 'loc': 0.5} #, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-cellProp['sections'] = {'soma': soma}  # add sections to dict
+cellProp = {'label': 'CT', 'conditions': {'cellType': 'CT'}, 'sections': {}, 'pointNeuron': {}}
+cellProp['sections'], cellProp['pointNeuron'] = importCell(
+    fileName='cells/izhi2007.py', cellName='IzhiCell',  type='IB', pointNeuronParamLabels='paramLabels')
+cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
+cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
+cellProp['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
+cellProp['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
 netParams['cellProps'].append(cellProp)  # add dict to list of cell properties
 
 ## SOM cell params
 cellProp = {'label': 'SOM', 'conditions': {'cellType': 'SOM'}, 'sections': {}}
-soma = {'geom': {}, 'topol': {}, 'mechs': {}, 'syns': {}, 'Izhi2007Type': 'LTS'}  #  soma
-soma['geom'] = {'diam': 14.0, 'L': 14.0}
-soma['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-soma['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-#soma['syns']['NMDA'] = {'type': 'ExpSyn', 'loc': 0.5, 'tau': 0.1, 'e': 0}  # NMDA
-soma['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-soma['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-#soma['syns']['GABAB'] = {'type': 'GABAB', 'loc': 0.5} #, 'tau1': 20, 'tau2': 40, 'e': -80}  # GABAB (superslow - longer lasting dend inh)
-cellProp['sections'] = {'soma': soma}  # add sections to dict
+cellProp['sections'], cellProp['pointNeuron'] = importCell(
+    fileName='cells/izhi2007.py', cellName='IzhiCell',  type='LTS', pointNeuronParamLabels='paramLabels')
+cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
+cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
+cellProp['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
+cellProp['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
 netParams['cellProps'].append(cellProp)  # add dict to list of cell properties 
 
 ## PV cell params
 cellProp = {'label': 'PV', 'conditions': {'cellType': 'PV'}, 'sections': {}}
-soma = {'geom': {}, 'topol': {}, 'mechs': {}, 'syns': {}, 'Izhi2007Type': 'FS'}  #  soma
-soma['geom'] = {'diam': 14.0, 'L': 14.0}
-soma['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-soma['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-#soma['syns']['NMDA'] = {'type': 'ExpSyn', 'loc': 0.5, 'tau': 0.1, 'e': 0}  # NMDA
-soma['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-soma['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-#soma['syns']['GABAB'] = {'type': 'GABAB', 'loc': 0.5} #, 'tau1': 20, 'tau2': 40, 'e': -80}  # GABAB (superslow - longer lasting dend inh)
-cellProp['sections'] = {'soma': soma}  # add sections to dict
+cellProp['sections'], cellProp['pointNeuron'] = importCell(
+    fileName='cells/izhi2007.py', cellName='IzhiCell',  type='FS', pointNeuronParamLabels='paramLabels')
+cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
+cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
+cellProp['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
+cellProp['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
 netParams['cellProps'].append(cellProp)  # add dict to list of cell properties
 
 
@@ -1821,7 +1806,7 @@ netParams['connParams'].append({'preTags': {'popLabel': ['IT_L4','IT_L5A','IT_L5
 'connFunc': 'probConn',
 'synReceptor': 'AMPA',
 'probability': 0.02222,
-'weight': 0.3525})
+'weight': 0.3625})
 
 netParams['connParams'].append({'preTags': {'popLabel': ['IT_L4','IT_L5A','IT_L5B','PT_L5B']},
 'postTags': {'popLabel': 'SOM_L5'},
@@ -1982,7 +1967,7 @@ simConfig['filename'] = '../data/M1_yfrac_izhi_correct'  # Set file output name
 simConfig['saveFileStep'] = 1000 # step size in ms to save data to disk
 simConfig['savePickle'] = False # Whether or not to write spikes etc. to a .mat file
 simConfig['saveJson'] = False # Whether or not to write spikes etc. to a .mat file
-simConfig['saveJsonSampled'] = False # Whether or not to write subsampled spikes etc. to a .mat file
+simConfig['saveJsonSampled'] = False # Whether or not to write spikes etc. to a .mat file
 simConfig['saveMat'] = False # Whether or not to write spikes etc. to a .mat file
 simConfig['saveTxt'] = False # save spikes and conn to txt file
 simConfig['saveDpk'] = False # save to a .dpk pickled file
@@ -1990,10 +1975,11 @@ simConfig['saveDpk'] = False # save to a .dpk pickled file
 
 # Analysis and plotting 
 simConfig['plotRaster'] = True # Whether or not to plot a raster
+simConfig['plotTracesGids'] = [] # plot recorded traces for this list of cells
 simConfig['plotPsd'] = False # plot power spectral density
 simConfig['maxspikestoplot'] = 3e9 # Maximum number of spikes to plot
 simConfig['plotConn'] = False # whether to plot conn matrix
 simConfig['plotWeightChanges'] = False # whether to plot weight changes (shown in conn matrix)
-simConfig['plot3darch'] = False # plot 3d architecture
+simConfig['plot3dArch'] = False # plot 3d architecture
 
 
