@@ -13,7 +13,8 @@ The data file is available in Pickle, JSON and Matlab formats.
 Two example models are provided: 
 
 1. **mpiHHTut.py** - simple tutorial model with a single Hodgkin-Huxley population and random connectivity
-2. **M1_yfrac_izhi.py** - mouse M1 model with 14 populations; size 300um x 300um x 1350um, has 10,734 Izhikevich cells, 3,963,006 synapses, and cortical depth-dependent connectivity based on multiple published experimental studies.
+2. **mpiHybridTut.py** - simple tutorial model with a Hodgkin-Huxley and an Izhikevich populations, with random connectivity
+3. **M1_yfrac_izhi.py** - mouse M1 model with 14 populations; size 300um x 300um x 1350um, has 10,734 Izhikevich cells, 3,963,006 synapses, and cortical depth-dependent connectivity based on multiple published experimental studies.
 
 Select which model to run by modifying the initialize call in init.py, eg.:
 
