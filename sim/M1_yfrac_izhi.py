@@ -8,8 +8,7 @@ simConfig is a dict containing a set of simulation configurations using a standa
 Contributors: salvadordura@gmail.com
 """
 
-from pylab import array
-from utils import importCell
+from netpyne.params.utils import importCell
 
 netParams = {}  # dictionary to store sets of network parameters
 simConfig = {}  # dictionary to store sets of simulation configurations

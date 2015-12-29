@@ -13,11 +13,11 @@ MPI usage:
 Contributors: salvadordura@gmail.com
 """
 
-#import sys
-#sys.path.append('/usr/site/nrniv/local/sim/')  # make sure netpyne package is in path
+import sys
+sys.path.append('/usr/site/nrniv/local/sim/')  # make sure netpyne package is in path
 
 from netpyne import framework as f
-from params import M1_yfrac_hybrid
+import M1_yfrac_izhi
 
 
 def runModel(simConfig, netParams):
@@ -35,6 +35,6 @@ def runModel(simConfig, netParams):
 
 # Main call
 runModel(                                      # execute sequence of commands to run full model
-    simConfig = M1_yfrac_hybrid.simConfig,     # pass simulation config options and network params as arguments
-    netParams = M1_yfrac_hybrid.netParams)      
+    simConfig = M1_yfrac_izhi.simConfig,     # pass simulation config options and network params as arguments
+    netParams = M1_yfrac_izhi.netParams)      
 
