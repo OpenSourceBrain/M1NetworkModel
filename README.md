@@ -22,7 +22,7 @@ Requires NEURON with Python and MPI support.
 
 * **/sim/init.py**: Main executable; calls functions from other modules. Sets what parameter file to use.
 
-* **/sim/params/M1_yfrac_izhi.py**: Parameters file for M1 Network model. Includes simulation (simConfig) and network (netParams) parameters. 
+* **/sim/M1_yfrac_izhi.py**: Parameters file for M1 Network model. Includes simulation (simConfig) and network (netParams) parameters. 
 
 * **/sim/cells/izhi2007.py**: Python class (wrapper) for Izhikevich 2007 neuron model
 
