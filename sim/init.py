@@ -13,28 +13,28 @@ MPI usage:
 Contributors: salvadordura@gmail.com
 """
 
-from time import time
-from neuron import h # Import NEURON
+#import sys
+#sys.path.append('/usr/site/nrniv/local/sim/')  # make sure netpyne package is in path
 
-from params import mpiHHTut, mpiHybridTut, M1_yfrac_izhi
-import shared as s
+from netpyne import framework as f
+from params import M1_yfrac_hybrid
 
 
 def runModel(simConfig, netParams):
     ''' Sequence of commands to run full model '''
-    s.sim.initialize(simConfig, netParams)  # create network object and set cfg and net params
-    s.net.createPops()                  # instantiate network populations
-    s.net.createCells()                 # instantiate network cells based on defined populations
-    s.net.connectCells()                # create connections between cells based on params
-    s.sim.setupRecording()              # setup variables to record for each cell (spikes, V traces, etc)
-    s.sim.runSim()                      # run parallel Neuron simulation  
-    s.sim.gatherData()                  # gather spiking data and cell info from each node
-    s.sim.saveData()                    # save params, cell info and sim output to file (pickle,mat,txt,etc)
-    s.analysis.plotData()               # plot spike raster
+    f.sim.initialize(simConfig, netParams)  # create network object and set cfg and net params
+    f.net.createPops()                  # instantiate network populations
+    f.net.createCells()                 # instantiate network cells based on defined populations
+    f.net.connectCells()                # create connections between cells based on params
+    f.sim.setupRecording()              # setup variables to record for each cell (spikes, V traces, etc)
+    f.sim.runSim()                      # run parallel Neuron simulation  
+    f.sim.gatherData()                  # gather spiking data and cell info from each node
+    f.sim.saveData()                    # save params, cell info and sim output to file (pickle,mat,txt,etc)
+    f.analysis.plotData()               # plot spike raster
 
 
 # Main call
 runModel(                                      # execute sequence of commands to run full model
-    simConfig = mpiHHTut.simConfig,     # pass simulation config options and network params as arguments
-    netParams = mpiHHTut.netParams)      
+    simConfig = M1_yfrac_hybrid.simConfig,     # pass simulation config options and network params as arguments
+    netParams = M1_yfrac_hybrid.netParams)      
 
