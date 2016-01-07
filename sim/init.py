@@ -13,9 +13,6 @@ MPI usage:
 Contributors: salvadordura@gmail.com
 """
 
-import sys
-sys.path.append('/usr/site/nrniv/local/sim/')  # make sure netpyne package is in path
-
 from netpyne import framework as f
 import M1_yfrac_izhi
 

@@ -25,7 +25,7 @@ simConfig = {}  # dictionary to store sets of simulation configurations
 
 # General network parameters
 netParams['scale'] = 1 # Size of simulation in thousands of cells
-netParams['modelsize'] = 300*netParams['scale'] # Size of netParamswork in um (~= 1000 neurons/column where column = 500um width)
+netParams['modelsize'] = 30*netParams['scale'] # Size of netParamswork in um (~= 1000 neurons/column where column = 500um width)
 netParams['sparseness'] = 1 # fraction of cells represented (num neurons = density * modelsize * sparseness)
 netParams['corticalthick'] = 1350 # cortical thickness/depth
 netParams['cortthaldist'] = 1500 # Distance from relay nucleus to cortex -- ~1 cm = 10,000 um (check)
@@ -42,8 +42,8 @@ netParams['toroidal'] = False  # Whether or not to have toroidal topology
 netParams['cellProps'] = []
 
 ## IT cell params
-cellProp = {'label': 'IT', 'conditions': {'cellType': 'IT'}, 'sections': {}, 'pointNeuron': {}}
-cellProp['sections'], cellProp['pointNeuron'] = importCell(
+cellProp = {'label': 'IT', 'conditions': {'cellType': 'IT'}, 'sections': {}}
+cellProp['sections'] = importCell(
     fileName='cells/izhi2007.py', cellName='IzhiCell',  type='RS', pointNeuronParamLabels='paramLabels')
 cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
 cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
@@ -52,8 +52,8 @@ cellProp['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0
 netParams['cellProps'].append(cellProp)  # add dict to list of cell properties
 
 ## PT cell params
-cellProp = {'label': 'PT', 'conditions': {'cellType': 'PT'}, 'sections': {}, 'pointNeuron': {}}
-cellProp['sections'], cellProp['pointNeuron'] = importCell(
+cellProp = {'label': 'PT', 'conditions': {'cellType': 'PT'}, 'sections': {}}
+cellProp['sections'] = importCell(
     fileName='cells/izhi2007.py', cellName='IzhiCell',  type='RS', pointNeuronParamLabels='paramLabels')
 cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
 cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
@@ -62,8 +62,8 @@ cellProp['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0
 netParams['cellProps'].append(cellProp)  # add dict to list of cell properties
 
 ## CT cell params
-cellProp = {'label': 'CT', 'conditions': {'cellType': 'CT'}, 'sections': {}, 'pointNeuron': {}}
-cellProp['sections'], cellProp['pointNeuron'] = importCell(
+cellProp = {'label': 'CT', 'conditions': {'cellType': 'CT'}, 'sections': {}}
+cellProp['sections'] = importCell(
     fileName='cells/izhi2007.py', cellName='IzhiCell',  type='IB', pointNeuronParamLabels='paramLabels')
 cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
 cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
@@ -73,7 +73,7 @@ netParams['cellProps'].append(cellProp)  # add dict to list of cell properties
 
 ## SOM cell params
 cellProp = {'label': 'SOM', 'conditions': {'cellType': 'SOM'}, 'sections': {}}
-cellProp['sections'], cellProp['pointNeuron'] = importCell(
+cellProp['sections'] = importCell(
     fileName='cells/izhi2007.py', cellName='IzhiCell',  type='LTS', pointNeuronParamLabels='paramLabels')
 cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
 cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
@@ -83,7 +83,7 @@ netParams['cellProps'].append(cellProp)  # add dict to list of cell properties
 
 ## PV cell params
 cellProp = {'label': 'PV', 'conditions': {'cellType': 'PV'}, 'sections': {}}
-cellProp['sections'], cellProp['pointNeuron'] = importCell(
+cellProp['sections'] = importCell(
     fileName='cells/izhi2007.py', cellName='IzhiCell',  type='FS', pointNeuronParamLabels='paramLabels')
 cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
 cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
