@@ -39,57 +39,57 @@ netParams['scaleconnprob'] = 1  # 1/netParams['scale']*array([[1, 1], [1, 1]]) #
 netParams['toroidal'] = False  # Whether or not to have toroidal topology
 
 # Cell properties list
-netParams['cellProps'] = []
+netParams['cellParams'] = []
 
 ## IT cell params
-cellProp = {'label': 'IT', 'conditions': {'cellType': 'IT'}, 'sections': {}}
-cellProp['sections'] = importCell(
+cellRule = {'label': 'IT', 'conditions': {'cellType': 'IT'}, 'sections': {}}
+cellRule['sections'] = importCell(
     fileName='cells/izhi2007.py', cellName='IzhiCell',  type='RS', pointNeuronParamLabels='paramLabels')
-cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-cellProp['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-cellProp['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-netParams['cellProps'].append(cellProp)  # add dict to list of cell properties
+cellRule['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
+cellRule['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
+cellRule['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
+cellRule['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
+netParams['cellParams'].append(cellRule)  # add dict to list of cell properties
 
 ## PT cell params
-cellProp = {'label': 'PT', 'conditions': {'cellType': 'PT'}, 'sections': {}}
-cellProp['sections'] = importCell(
+cellRule = {'label': 'PT', 'conditions': {'cellType': 'PT'}, 'sections': {}}
+cellRule['sections'] = importCell(
     fileName='cells/izhi2007.py', cellName='IzhiCell',  type='RS', pointNeuronParamLabels='paramLabels')
-cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-cellProp['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-cellProp['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-netParams['cellProps'].append(cellProp)  # add dict to list of cell properties
+cellRule['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
+cellRule['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
+cellRule['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
+cellRule['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
+netParams['cellParams'].append(cellRule)  # add dict to list of cell properties
 
 ## CT cell params
-cellProp = {'label': 'CT', 'conditions': {'cellType': 'CT'}, 'sections': {}}
-cellProp['sections'] = importCell(
+cellRule = {'label': 'CT', 'conditions': {'cellType': 'CT'}, 'sections': {}}
+cellRule['sections'] = importCell(
     fileName='cells/izhi2007.py', cellName='IzhiCell',  type='IB', pointNeuronParamLabels='paramLabels')
-cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-cellProp['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-cellProp['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-netParams['cellProps'].append(cellProp)  # add dict to list of cell properties
+cellRule['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
+cellRule['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
+cellRule['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
+cellRule['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
+netParams['cellParams'].append(cellRule)  # add dict to list of cell properties
 
 ## SOM cell params
-cellProp = {'label': 'SOM', 'conditions': {'cellType': 'SOM'}, 'sections': {}}
-cellProp['sections'] = importCell(
+cellRule = {'label': 'SOM', 'conditions': {'cellType': 'SOM'}, 'sections': {}}
+cellRule['sections'] = importCell(
     fileName='cells/izhi2007.py', cellName='IzhiCell',  type='LTS', pointNeuronParamLabels='paramLabels')
-cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-cellProp['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-cellProp['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-netParams['cellProps'].append(cellProp)  # add dict to list of cell properties 
+cellRule['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
+cellRule['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
+cellRule['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
+cellRule['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
+netParams['cellParams'].append(cellRule)  # add dict to list of cell properties 
 
 ## PV cell params
-cellProp = {'label': 'PV', 'conditions': {'cellType': 'PV'}, 'sections': {}}
-cellProp['sections'] = importCell(
+cellRule = {'label': 'PV', 'conditions': {'cellType': 'PV'}, 'sections': {}}
+cellRule['sections'] = importCell(
     fileName='cells/izhi2007.py', cellName='IzhiCell',  type='FS', pointNeuronParamLabels='paramLabels')
-cellProp['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-cellProp['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-cellProp['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-cellProp['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-netParams['cellProps'].append(cellProp)  # add dict to list of cell properties
+cellRule['sections']['soma']['syns']['AMPA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
+cellRule['sections']['soma']['syns']['NMDA'] = {'type': 'MyExp2SynNMDABB', 'loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
+cellRule['sections']['soma']['syns']['GABAA'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
+cellRule['sections']['soma']['syns']['GABAB'] = {'type': 'MyExp2SynBB', 'loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
+netParams['cellParams'].append(cellRule)  # add dict to list of cell properties
 
 
 ## create list of populations, where each item contains a dict with the pop params
