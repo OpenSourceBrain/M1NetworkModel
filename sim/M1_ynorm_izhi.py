@@ -32,7 +32,7 @@ netParams['sizeZ'] = 30 # z-dimension (horizontal depth) size in um
 
 ## General connectivity parameters
 netParams['scaleconnweight'] = 0.01 # Connection weight scale factor
-
+netParams['defaultDelay'] = 3 # default conn delay (ms)
 
 # Cell properties list
 netParams['cellParams'] = []
@@ -1628,46 +1628,40 @@ netParams['connParams'].append({'preTags': {'popLabel': ['IT_L6','CT_L6']},
 netParams['connParams'].append({'preTags': {'popLabel': 'SOM_L23'},
 'postTags': {'ynorm': [0.12,0.31]},
 'synReceptor': 'GABAB',
-'probability': 1.0,
-'weight': 1.5,
-'lengthConst': 100})
+'probability': '1.0 * exp(-dist_xyz/100)',
+'weight': 1.5})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'SOM_L5'},
 'postTags': {'ynorm': [0.31,0.77]},
 'synReceptor': 'GABAB',
-'probability': 1.0,
-'weight': 1.5,
-'lengthConst': 100})
+'probability': '1.0 * exp(-dist_xyz/100)',
+'weight': 1.5})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'SOM_L6'},
 'postTags': {'ynorm': [0.77,1.0]},
 'synReceptor': 'GABAB',
-'probability': 1.0,
-'weight': 1.5,
-'lengthConst': 100})
+'probability': '1.0 * exp(-dist_xyz/100)',
+'weight': 1.5})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'PV_L23'},
 'postTags': {'ynorm': [0.12,0.31]},
 'synReceptor': 'GABAA',
-'probability': 1.0,
-'weight': 1.5,
-'lengthConst': 100})
+'probability': '1.0 * exp(-dist_xyz/100)',
+'weight': 1.5})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'PV_L5'},
 'postTags': {'ynorm': [0.31,0.77]},
 'synReceptor': 'GABAA',
-'probability': 1.0,
-'weight': 1.5,
-'lengthConst': 100})
+'probability': '1.0 * exp(-dist_xyz/100)',
+'weight': 1.5})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'PV_L6'},
 'postTags': {'ynorm': [0.77,1.0]},
 'synReceptor': 'GABAA',
-'probability': 1.0,
-'weight': 1.5,
-'lengthConst': 100})
+'probability': '1.0 * exp(-dist_xyz/100)',
+'weight': 1.5})
 
-#"""
+#
 
 # Dictionary of annotations
 netParams['annots'] = {}
