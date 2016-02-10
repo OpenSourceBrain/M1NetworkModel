@@ -20,7 +20,6 @@ Cell types available are based on Izhikevich, 2007 book:
 import collections
 from neuron import h
 dummy = h.Section()
-paramLabels = ('C', 'k', 'vr','vt', 'vpeak', 'a', 'b', 'c', 'd', 'celltype')
 type2007 = collections.OrderedDict([
   #              C    k     vr  vt vpeak   a      b   c    d  celltype
   ('RS',        (100, 0.7,  -60, -40, 35, 0.03,   -2, -50,  100,  1)),

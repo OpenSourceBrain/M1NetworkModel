@@ -14,12 +14,12 @@ Contributors: salvadordura@gmail.com
 """
 
 from netpyne import framework as f
-import M1_yfrac_izhi
+import M1_ynorm_izhi
 
 
 def runModel(simConfig, netParams):
     ''' Sequence of commands to run full model '''
-    f.sim.initialize(simConfig, netParams)  # create network object and set cfg and net params
+    f.sim.initialize(simConfig = simConfig, netParams = netParams)  # create network object and set cfg and net params
     f.net.createPops()                  # instantiate network populations
     f.net.createCells()                 # instantiate network cells based on defined populations
     f.net.connectCells()                # create connections between cells based on params
@@ -32,6 +32,6 @@ def runModel(simConfig, netParams):
 
 # Main call
 runModel(                                      # execute sequence of commands to run full model
-    simConfig = M1_yfrac_izhi.simConfig,     # pass simulation config options and network params as arguments
-    netParams = M1_yfrac_izhi.netParams)      
+    simConfig = M1_ynorm_izhi.simConfig,     # pass simulation config options and network params as arguments
+    netParams = M1_ynorm_izhi.netParams)      
 
