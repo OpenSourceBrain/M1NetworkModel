@@ -2,7 +2,7 @@
 ## Description
 A multiscale model of mouse primary motor cortex (M1).
 
-The code requires the [`netpyne` package](https://github.com/Neurosim-lab/netpyne), a NEURON/Python-based modularized framework for network simulations with MPI. Using this modularized structure, user can define different models (including cell types, populations, connectivities, etc.) just by modifying a single parameters file. 
+The code requires the [netpyne package](https://github.com/Neurosim-lab/netpyne), a NEURON/Python-based modularized framework for network simulations with MPI. Using this modularized structure, user can define different models (including cell types, populations, connectivities, etc.) just by modifying a single parameters file. 
 
 Additional details of the modelling framework and M1 model can be found here:
 
