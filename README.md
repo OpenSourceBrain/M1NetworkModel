@@ -20,6 +20,8 @@ Requires NEURON with Python and MPI support.
 
 The simulation should produce a raster plot with 35,344 spikes (avg rate of 3.29 Hz) over 1 second, showing ~14 Hz oscillations (see below).
 
+![Raster plot](/sim/raster.png?raw=true "Raster plot of simulation")
+
 
 ## Overview of file structure:
 
