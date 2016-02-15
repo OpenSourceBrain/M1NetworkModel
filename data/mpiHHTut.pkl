@@ -18,7 +18,7 @@ p8
 S'weight'
 p11
 F0.004
-sS'synReceptor'
+sS'syn'
 p12
 NsS'maxConns'
 p13
@@ -195,7 +195,7 @@ p88
 NsS'weight'
 p89
 F0.004
-sS'synReceptor'
+sS'syn'
 p90
 S'NMDA'
 p91
@@ -57888,7 +57888,7 @@ p7497
 NsS'weight'
 p7498
 F0.004
-sS'synReceptor'
+sS'syn'
 p7499
 S'NMDA'
 p7500
