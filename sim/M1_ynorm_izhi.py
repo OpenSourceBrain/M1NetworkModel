@@ -32,8 +32,9 @@ netParams['sizeZ'] = 300 # z-dimension (horizontal depth) size in um
 
 ## General connectivity parameters
 netParams['scaleConnWeight'] = 0.00005 # Connection weight scale factor
-netParams['defaultDelay'] = 3.0 # default conn delay (ms)
-netParams['propVelocity'] = 200.0 # propagation velocity (um/ms)
+netParams['defaultDelay'] = 2.0 # default conn delay (ms)
+netParams['propVelocity'] = 100.0 # propagation velocity (um/ms)
+netParams['probLambda'] = 100.0  # length constant (lambda) for connection probability decay
 
 # Cell properties list
 netParams['cellParams'] = []
@@ -101,8 +102,8 @@ netParams['popParams'].append({'popLabel': 'PV_L5',  'cellModel': 'Izhi2007b', '
 netParams['popParams'].append({'popLabel': 'SOM_L5', 'cellModel': 'Izhi2007b', 'cell_type': 'SOM', 'projTarget': '', 'ynormRange': [0.31, 0.77], 'density': 10e3}) #  L5 SOM (LTS)
 netParams['popParams'].append({'popLabel': 'PV_L6',  'cellModel': 'Izhi2007b', 'cell_type': 'PV',  'projTarget': '', 'ynormRange': [0.77, 1.0], 'density': 10e3}) #  L6 PV (FS)
 netParams['popParams'].append({'popLabel': 'SOM_L6', 'cellModel': 'Izhi2007b', 'cell_type': 'SOM', 'projTarget': '', 'ynormRange': [0.77, 1.0], 'density': 10e3}) #  L6 SOM (LTS)
-netParams['popParams'].append({'popLabel': 'background_E', 'cellModel': 'NetStim', 'rate': 10, 'noise': 0.5, 'source': 'random'})  # background inputs to Exc
-netParams['popParams'].append({'popLabel': 'background_I', 'cellModel': 'NetStim', 'rate': 10, 'noise': 0.5, 'source': 'random'})  # background inputs to Inh
+netParams['popParams'].append({'popLabel': 'background_E', 'cellModel': 'NetStim', 'rate': 20, 'noise': 0.5, 'source': 'random'})  # background inputs to Exc
+netParams['popParams'].append({'popLabel': 'background_I', 'cellModel': 'NetStim', 'rate': 20, 'noise': 0.5, 'source': 'random'})  # background inputs to Inh
 
 netParams['popTagsCopiedToCells'] = ['popLabel', 'cellModel', 'cell_type', 'projTarget']  # tags from population that are copied over to the cells
 
@@ -114,25 +115,25 @@ netParams['connParams'].append({'preTags': {'popLabel': 'background_E'}, # backg
 'postTags': {'cell_type': ['IT','CT']}, 
 'syn': 'NMDA',
 'weight': 0.0002,
-'delay': 5})  
+'delay': 'gauss(10,5)'})  
 
 netParams['connParams'].append({'preTags': {'popLabel': 'background_E'}, # background -> E PT
 'postTags': {'cell_type': ['PT']}, 
 'syn': 'NMDA',
 'weight': 0.00025,
-'delay': 5}) 
+'delay': 'gauss(10,5)'}) 
 
 netParams['connParams'].append({'preTags': {'popLabel': 'background_I'}, # background -> I PV
 'postTags': {'cell_type': ['PV']}, 
 'syn': 'NMDA',
 'weight': 0.0002,
-'delay': 5}) 
+'delay': 'gauss(10,5)'}) 
 
 netParams['connParams'].append({'preTags': {'popLabel': 'background_I'}, # background -> I SOM
 'postTags': {'cell_type': ['SOM']}, 
 'syn': 'NMDA',
 'weight': 0.0001,
-'delay': 5}) 
+'delay': 'gauss(10,5)'}) 
 
 
 # Generated using importConnFromExcel() function in params/utils.py 
@@ -1884,42 +1885,42 @@ netParams['connParams'].append({'preTags': {'popLabel': ['IT_L6','CT_L6']},
 netParams['connParams'].append({'preTags': {'popLabel': 'SOM_L23'},
 'postTags': {'ynorm': [0.12,0.31]},
 'syn': 'GABAB',
-'probability': '1.0 * exp(-dist_3D/100)',
+'probability': '1.0 * exp(-dist_3D/probLambda)',
 'weight': 1.5,
 'delay': 'defaultDelay+dist_3D/propVelocity'})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'SOM_L5'},
 'postTags': {'ynorm': [0.31,0.77]},
 'syn': 'GABAB',
-'probability': '1.0 * exp(-dist_3D/100)',
+'probability': '1.0 * exp(-dist_3D/probLambda)',
 'weight': 1.5,
 'delay': 'defaultDelay+dist_3D/propVelocity'})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'SOM_L6'},
 'postTags': {'ynorm': [0.77,1.0]},
 'syn': 'GABAB',
-'probability': '1.0 * exp(-dist_3D/100)',
+'probability': '1.0 * exp(-dist_3D/probLambda)',
 'weight': 1.5,
 'delay': 'defaultDelay+dist_3D/propVelocity'})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'PV_L23'},
 'postTags': {'ynorm': [0.12,0.31]},
 'syn': 'GABAA',
-'probability': '1.0 * exp(-dist_3D/100)',
+'probability': '1.0 * exp(-dist_3D/probLambda)',
 'weight': 1.5,
 'delay': 'defaultDelay+dist_3D/propVelocity'})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'PV_L5'},
 'postTags': {'ynorm': [0.31,0.77]},
 'syn': 'GABAA',
-'probability': '1.0 * exp(-dist_3D/100)',
+'probability': '1.0 * exp(-dist_3D/probLambda)',
 'weight': 1.5,
 'delay': 'defaultDelay+dist_3D/propVelocity'})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'PV_L6'},
 'postTags': {'ynorm': [0.77,1.0]},
 'syn': 'GABAA',
-'probability': '1.0 * exp(-dist_3D/100)',
+'probability': '1.0 * exp(-dist_3D/probLambda)',
 'weight': 1.5,
 'delay': 'defaultDelay+dist_3D/propVelocity'})
 #'''
@@ -1946,7 +1947,7 @@ simConfig['verbose'] = 0 # Whether to write diagnostic information on events
 
 # Recording 
 simConfig['recordTraces'] = True  # whether to record cell traces or not
-simConfig['recordDict'] = {}
+simConfig['recordDict'] = {} # 'V':{'sec':'soma','pos':0.5,'var':'v'}}
 	#'V':{'sec':'soma','pos':0.5,'var':'v'}, 
     #'u':{'sec':'soma', 'pointp':'Izhi2007b_0', 'var':'u'}, 
     #'I':{'sec':'soma', 'pointp':'Izhi2007b_0', 'var':'i'}, 
@@ -1971,7 +1972,7 @@ simConfig['saveHDF5'] = False # save to HDF5 file
 simConfig['plotRaster'] = True # Whether or not to plot a raster
 simConfig['orderRasterYnorm'] = 0 # Order cells in raster by yfrac (default is by pop and cell id)
 simConfig['plotTracesGids'] = [] # plot recorded traces for this list of cells
-simConfig['plotPsd'] = False # plot power spectral density (not yet implemented)
+simConfig['plotLFPSpectrum'] = False # plot power spectral density (not yet implemented)
 simConfig['plotConn'] = False # whether to plot conn matrix (not yet implemented)
 
 
