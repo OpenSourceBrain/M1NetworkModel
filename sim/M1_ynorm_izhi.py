@@ -1937,7 +1937,7 @@ netParams['annots'] = {}
 simConfig = {}  # dictionary to store simConfig
 
 # Simulation parameters
-simConfig['duration'] = simConfig['tstop'] = 1*1e3 # Duration of the simulation, in ms
+simConfig['duration'] = 1*1e3 # Duration of the simulation, in ms
 simConfig['dt'] = 0.5 # Internal integration timestep to use
 simConfig['randseed'] = 1 # Random seed to use
 simConfig['createNEURONObj'] = 1  # create HOC objects when instantiating network
@@ -1946,14 +1946,13 @@ simConfig['verbose'] = 0 # Whether to write diagnostic information on events
 
 
 # Recording 
-simConfig['recordTraces'] = True  # whether to record cell traces or not
-simConfig['recordDict'] = {} # 'V':{'sec':'soma','pos':0.5,'var':'v'}}
+simConfig['recordCells'] = []  # list of cells to record from 
+simConfig['recordTraces'] = {} # 'V':{'sec':'soma','pos':0.5,'var':'v'}}
 	#'V':{'sec':'soma','pos':0.5,'var':'v'}, 
     #'u':{'sec':'soma', 'pointp':'Izhi2007b_0', 'var':'u'}, 
     #'I':{'sec':'soma', 'pointp':'Izhi2007b_0', 'var':'i'}, 
     #'AMPA_i': {'sec':'soma', 'pos':'0.5', 'syn':'AMPA', 'var':'i'},
     #'NMDA_i': {'sec':'soma', 'pos':'0.5', 'syn':'NMDA', 'var':'iNMDA'}}  # Dict of traces to record
-simConfig['simDataVecs'] = ['spkt', 'spkid','stims']+simConfig['recordDict'].keys()
 simConfig['recordStim'] = False  # record spikes of cell stims
 simConfig['recordStep'] = 0.5 # Step size in ms to save data (eg. V traces, LFP, etc)
 
@@ -1971,7 +1970,7 @@ simConfig['saveHDF5'] = False # save to HDF5 file
 # Analysis and plotting 
 simConfig['plotRaster'] = True # Whether or not to plot a raster
 simConfig['orderRasterYnorm'] = 0 # Order cells in raster by yfrac (default is by pop and cell id)
-simConfig['plotTracesGids'] = [] # plot recorded traces for this list of cells
+simConfig['plotCells'] = [] # plot recorded traces for this list of cells
 simConfig['plotLFPSpectrum'] = False # plot power spectral density (not yet implemented)
 simConfig['plotConn'] = False # whether to plot conn matrix (not yet implemented)
 
