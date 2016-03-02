@@ -109,7 +109,7 @@ netParams['popTagsCopiedToCells'] = ['popLabel', 'cellModel', 'cell_type', 'proj
 
 
 # List of connectivity rules/params
-netParams['ItoIweight'] = 0.5
+netParams['ItoIweight'] = 1.0
 
 netParams['connParams'] = []  
 
