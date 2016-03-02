@@ -26,9 +26,9 @@ simConfig = {}  # dictionary to store sets of simulation configurations
 
 # General network parameters
 netParams['scale'] = 1 # Scale factor for number of cells
-netParams['sizeX'] = 100 # x-dimension (horizontal length) size in um
+netParams['sizeX'] = 300 # x-dimension (horizontal length) size in um
 netParams['sizeY'] = 1350 # y-dimension (vertical height or cortical depth) size in um
-netParams['sizeZ'] = 100 # z-dimension (horizontal depth) size in um
+netParams['sizeZ'] = 300 # z-dimension (horizontal depth) size in um
 
 ## General connectivity parameters
 netParams['scaleConnWeight'] = 0.0001 # Connection weight scale factor
@@ -117,25 +117,25 @@ netParams['connParams'].append({'preTags': {'popLabel': 'background_E'}, # backg
 'postTags': {'cell_type': ['IT','CT']}, 
 'syn': 'NMDA',
 'weight': 0.0001,
-'delay': 'gauss(10,5)'})  
+'delay': 'gauss(5,3)'})  
 
 netParams['connParams'].append({'preTags': {'popLabel': 'background_E'}, # background -> E PT
 'postTags': {'cell_type': ['PT']}, 
 'syn': 'NMDA',
-'weight': 0.00008,
-'delay': 'gauss(10,5)'}) 
+'weight': 0.0001,
+'delay': 'gauss(5,3)'}) 
 
 netParams['connParams'].append({'preTags': {'popLabel': 'background_I'}, # background -> I PV
 'postTags': {'cell_type': ['PV']}, 
 'syn': 'NMDA',
 'weight': 0.0001,
-'delay': 'gauss(10,5)'}) 
+'delay': 'gauss(5,3)'}) 
 
 netParams['connParams'].append({'preTags': {'popLabel': 'background_I'}, # background -> I SOM
 'postTags': {'cell_type': ['SOM']}, 
 'syn': 'NMDA',
 'weight': 0.00003,
-'delay': 'gauss(10,5)'}) 
+'delay': 'gauss(5,3)'}) 
 
 
 
