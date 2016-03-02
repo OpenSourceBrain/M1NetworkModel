@@ -18,7 +18,8 @@ Requires NEURON with Python and MPI support.
 1. Type or `./compile or the equivalent `nrnivmodl mod`. This should create a directory called either i686 or x86_64, depending on your computer's architecture. 
 2. To run type: `./runsim [num_proc]` or the equivalent `mpiexec -np [num_proc] nrniv -python -mpi init.py`
 
-The simulation should produce a raster plot with 41,852 spikes (avg rate of 3.90 Hz) over 1 second, showing ~18 Hz oscillations (see below).
+The simulation should produce a raster plot with 54,562 spikes (avg rate of 5.08 Hz) over 1 second, showing ~15 Hz oscillations (see below).
+
 
 ![Raster plot](/sim/raster.png?raw=true "Raster plot of simulation")
 
