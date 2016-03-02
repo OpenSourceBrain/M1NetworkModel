@@ -26,15 +26,15 @@ simConfig = {}  # dictionary to store sets of simulation configurations
 
 # General network parameters
 netParams['scale'] = 1 # Scale factor for number of cells
-netParams['sizeX'] = 300 # x-dimension (horizontal length) size in um
+netParams['sizeX'] = 100 # x-dimension (horizontal length) size in um
 netParams['sizeY'] = 1350 # y-dimension (vertical height or cortical depth) size in um
-netParams['sizeZ'] = 300 # z-dimension (horizontal depth) size in um
+netParams['sizeZ'] = 100 # z-dimension (horizontal depth) size in um
 
 ## General connectivity parameters
-netParams['scaleConnWeight'] = 0.00005 # Connection weight scale factor
+netParams['scaleConnWeight'] = 0.0001 # Connection weight scale factor
 netParams['defaultDelay'] = 2.0 # default conn delay (ms)
 netParams['propVelocity'] = 100.0 # propagation velocity (um/ms)
-netParams['probLambda'] = 100.0  # length constant (lambda) for connection probability decay
+netParams['probLambda'] = 100.0  # length constant (lambda) for connection probability decay (um)
 
 # Cell properties list
 netParams['cellParams'] = []
@@ -109,31 +109,34 @@ netParams['popTagsCopiedToCells'] = ['popLabel', 'cellModel', 'cell_type', 'proj
 
 
 # List of connectivity rules/params
+netParams['ItoIweight'] = 0.5
+
 netParams['connParams'] = []  
 
 netParams['connParams'].append({'preTags': {'popLabel': 'background_E'}, # background -> E IT,CT
 'postTags': {'cell_type': ['IT','CT']}, 
 'syn': 'NMDA',
-'weight': 0.0002,
+'weight': 0.0001,
 'delay': 'gauss(10,5)'})  
 
 netParams['connParams'].append({'preTags': {'popLabel': 'background_E'}, # background -> E PT
 'postTags': {'cell_type': ['PT']}, 
 'syn': 'NMDA',
-'weight': 0.00025,
+'weight': 0.00008,
 'delay': 'gauss(10,5)'}) 
 
 netParams['connParams'].append({'preTags': {'popLabel': 'background_I'}, # background -> I PV
 'postTags': {'cell_type': ['PV']}, 
 'syn': 'NMDA',
-'weight': 0.0002,
+'weight': 0.0001,
 'delay': 'gauss(10,5)'}) 
 
 netParams['connParams'].append({'preTags': {'popLabel': 'background_I'}, # background -> I SOM
 'postTags': {'cell_type': ['SOM']}, 
 'syn': 'NMDA',
-'weight': 0.0001,
+'weight': 0.00003,
 'delay': 'gauss(10,5)'}) 
+
 
 
 # Generated using importConnFromExcel() function in params/utils.py 
@@ -1881,47 +1884,46 @@ netParams['connParams'].append({'preTags': {'popLabel': ['IT_L6','CT_L6']},
 'weight': 0.53,
 'delay': 'defaultDelay+dist_3D/propVelocity'})
 
-
 netParams['connParams'].append({'preTags': {'popLabel': 'SOM_L23'},
 'postTags': {'ynorm': [0.12,0.31]},
 'syn': 'GABAB',
 'probability': '1.0 * exp(-dist_3D/probLambda)',
-'weight': 1.5,
+'weight': 'ItoIweight',
 'delay': 'defaultDelay+dist_3D/propVelocity'})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'SOM_L5'},
 'postTags': {'ynorm': [0.31,0.77]},
 'syn': 'GABAB',
 'probability': '1.0 * exp(-dist_3D/probLambda)',
-'weight': 1.5,
+'weight': 'ItoIweight',
 'delay': 'defaultDelay+dist_3D/propVelocity'})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'SOM_L6'},
 'postTags': {'ynorm': [0.77,1.0]},
 'syn': 'GABAB',
 'probability': '1.0 * exp(-dist_3D/probLambda)',
-'weight': 1.5,
+'weight': 'ItoIweight',
 'delay': 'defaultDelay+dist_3D/propVelocity'})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'PV_L23'},
 'postTags': {'ynorm': [0.12,0.31]},
 'syn': 'GABAA',
 'probability': '1.0 * exp(-dist_3D/probLambda)',
-'weight': 1.5,
+'weight': 'ItoIweight',
 'delay': 'defaultDelay+dist_3D/propVelocity'})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'PV_L5'},
 'postTags': {'ynorm': [0.31,0.77]},
 'syn': 'GABAA',
 'probability': '1.0 * exp(-dist_3D/probLambda)',
-'weight': 1.5,
+'weight': 'ItoIweight',
 'delay': 'defaultDelay+dist_3D/propVelocity'})
 
 netParams['connParams'].append({'preTags': {'popLabel': 'PV_L6'},
 'postTags': {'ynorm': [0.77,1.0]},
 'syn': 'GABAA',
 'probability': '1.0 * exp(-dist_3D/probLambda)',
-'weight': 1.5,
+'weight': 'ItoIweight',
 'delay': 'defaultDelay+dist_3D/propVelocity'})
 #'''
 
@@ -1937,8 +1939,8 @@ netParams['annots'] = {}
 simConfig = {}  # dictionary to store simConfig
 
 # Simulation parameters
-simConfig['duration'] = 1*1e3 # Duration of the simulation, in ms
-simConfig['dt'] = 0.5 # Internal integration timestep to use
+simConfig['duration'] = 1.0*1e3 # Duration of the simulation, in ms
+simConfig['dt'] = 0.1 # Internal integration timestep to use
 simConfig['randseed'] = 1 # Random seed to use
 simConfig['createNEURONObj'] = 1  # create HOC objects when instantiating network
 simConfig['createPyStruct'] = 1  # create Python structure (simulator-independent) when instantiating network
@@ -1947,14 +1949,14 @@ simConfig['verbose'] = 0 # Whether to write diagnostic information on events
 
 # Recording 
 simConfig['recordCells'] = []  # list of cells to record from 
-simConfig['recordTraces'] = {} # 'V':{'sec':'soma','pos':0.5,'var':'v'}}
+simConfig['recordTraces'] = {'V':{'sec':'soma','pos':0.5,'var':'v'}} # 'V':{'sec':'soma','pos':0.5,'var':'v'}}
 	#'V':{'sec':'soma','pos':0.5,'var':'v'}, 
     #'u':{'sec':'soma', 'pointp':'Izhi2007b_0', 'var':'u'}, 
     #'I':{'sec':'soma', 'pointp':'Izhi2007b_0', 'var':'i'}, 
     #'AMPA_i': {'sec':'soma', 'pos':'0.5', 'syn':'AMPA', 'var':'i'},
     #'NMDA_i': {'sec':'soma', 'pos':'0.5', 'syn':'NMDA', 'var':'iNMDA'}}  # Dict of traces to record
 simConfig['recordStim'] = False  # record spikes of cell stims
-simConfig['recordStep'] = 0.5 # Step size in ms to save data (eg. V traces, LFP, etc)
+simConfig['recordStep'] = 0.1 # Step size in ms to save data (eg. V traces, LFP, etc)
 
 # Saving
 simConfig['filename'] = '../data/M1_ynorm_izhi_correct'  # Set file output name
@@ -1970,7 +1972,7 @@ simConfig['saveHDF5'] = False # save to HDF5 file
 # Analysis and plotting 
 simConfig['plotRaster'] = True # Whether or not to plot a raster
 simConfig['orderRasterYnorm'] = 0 # Order cells in raster by yfrac (default is by pop and cell id)
-simConfig['plotCells'] = [] # plot recorded traces for this list of cells
+simConfig['plotCells'] = ['IT_L23','PT_L5B','PV_L23', 'SOM_L5'] # plot recorded traces for this list of cells
 simConfig['plotLFPSpectrum'] = False # plot power spectral density (not yet implemented)
 simConfig['plotConn'] = False # whether to plot conn matrix (not yet implemented)
 
