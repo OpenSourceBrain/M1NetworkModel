@@ -36,55 +36,6 @@ netParams['defaultDelay'] = 2.0 # default conn delay (ms)
 netParams['propVelocity'] = 100.0 # propagation velocity (um/ms)
 netParams['probLambda'] = 100.0  # length constant (lambda) for connection probability decay (um)
 
-# Cell properties list
-netParams['cellParams'] = []
-
-## IT cell params
-cellRule = {'label': 'IT', 'conditions': {'cellType': 'IT'}, 'sections': {}}
-importCell(cellRule=cellRule, fileName='cells/izhi2007.py', cellName='IzhiCell', cellArgs={'type':'RS'})
-cellRule['sections']['soma']['synMechs']['AMPA'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-cellRule['sections']['soma']['synMechs']['NMDA'] = {'_type': 'MyExp2SynNMDABB', '_loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-cellRule['sections']['soma']['synMechs']['GABAA'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-cellRule['sections']['soma']['synMechs']['GABAB'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-netParams['cellParams'].append(cellRule)  # add dict to list of cell property rules
-
-## PT cell params
-cellRule = {'label': 'PT', 'conditions': {'cellType': 'PT'}, 'sections': {}}
-importCell(cellRule=cellRule, fileName='cells/izhi2007.py', cellName='IzhiCell',  cellArgs={'type':'IB'})
-cellRule['sections']['soma']['synMechs']['AMPA'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-cellRule['sections']['soma']['synMechs']['NMDA'] = {'_type': 'MyExp2SynNMDABB', '_loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-cellRule['sections']['soma']['synMechs']['GABAA'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-cellRule['sections']['soma']['synMechs']['GABAB'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-netParams['cellParams'].append(cellRule)  # add dict to list of cell property rules
-
-## CT cell params
-cellRule = {'label': 'CT', 'conditions': {'cellType': 'CT'}, 'sections': {}}
-importCell(cellRule=cellRule, fileName='cells/izhi2007.py', cellName='IzhiCell', cellArgs={'type':'RS'})
-cellRule['sections']['soma']['synMechs']['AMPA'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-cellRule['sections']['soma']['synMechs']['NMDA'] = {'_type': 'MyExp2SynNMDABB', '_loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-cellRule['sections']['soma']['synMechs']['GABAA'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-cellRule['sections']['soma']['synMechs']['GABAB'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-netParams['cellParams'].append(cellRule)  # add dict to list of cell property rules
-
-## SOM cell params
-cellRule = {'label': 'SOM', 'conditions': {'cellType': 'SOM'}, 'sections': {}}
-importCell(cellRule=cellRule, fileName='cells/izhi2007.py', cellName='IzhiCell', cellArgs={'type':'LTS'})
-cellRule['sections']['soma']['synMechs']['AMPA'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-cellRule['sections']['soma']['synMechs']['NMDA'] = {'_type': 'MyExp2SynNMDABB', '_loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-cellRule['sections']['soma']['synMechs']['GABAA'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-cellRule['sections']['soma']['synMechs']['GABAB'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-netParams['cellParams'].append(cellRule)  # add dict to list of cell property rules
-
-## PV cell params
-cellRule = {'label': 'PV', 'conditions': {'cellType': 'PV'}, 'sections': {}}
-importCell(cellRule=cellRule, fileName='cells/izhi2007.py', cellName='IzhiCell', cellArgs={'type':'FS'})
-cellRule['sections']['soma']['synMechs']['AMPA'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.05, 'tau2':5.3, 'e': 0}  # AMPA
-cellRule['sections']['soma']['synMechs']['NMDA'] = {'_type': 'MyExp2SynNMDABB', '_loc': 0.5, 'tau1NMDA': 15, 'tau2NMDA': 150, 'r': 1, 'e': 0}  # NMDA
-cellRule['sections']['soma']['synMechs']['GABAA'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA (fast)
-cellRule['sections']['soma']['synMechs']['GABAB'] = {'_type': 'MyExp2SynBB', '_loc': 0.5, 'tau1': 0.2, 'tau2': 20, 'e': -80}  # GABAB (slow)
-netParams['cellParams'].append(cellRule)  # add dict to list of cell property rules
-
-
 ## create list of populations, where each item contains a dict with the pop params
 netParams['popParams'] = []  
      
@@ -104,7 +55,42 @@ netParams['popParams'].append({'popLabel': 'SOM_L6', 'cellModel': 'Izhi2007b', '
 netParams['popParams'].append({'popLabel': 'background_E', 'cellModel': 'NetStim', 'rate': 20, 'noise': 0.5, 'source': 'random'})  # background inputs to Exc
 netParams['popParams'].append({'popLabel': 'background_I', 'cellModel': 'NetStim', 'rate': 20, 'noise': 0.5, 'source': 'random'})  # background inputs to Inh
 
-netParams['popTagsCopiedToCells'] = ['popLabel', 'cellModel', 'cellType', 'projTarget']  # tags from population that are copied over to the cells
+
+# Cell properties list
+netParams['cellParams'] = []
+
+## IT cell params
+cellRule = {'label': 'IT', 'conditions': {'cellType': 'IT'}, 'sections': {}}
+importCell(cellRule=cellRule, fileName='cells/izhi2007.py', cellName='IzhiCell', cellArgs={'type':'RS'})
+netParams['cellParams'].append(cellRule)  # add dict to list of cell property rules
+
+## PT cell params
+cellRule = {'label': 'PT', 'conditions': {'cellType': 'PT'}, 'sections': {}}
+importCell(cellRule=cellRule, fileName='cells/izhi2007.py', cellName='IzhiCell',  cellArgs={'type':'IB'})
+netParams['cellParams'].append(cellRule)  # add dict to list of cell property rules
+
+## CT cell params
+cellRule = {'label': 'CT', 'conditions': {'cellType': 'CT'}, 'sections': {}}
+importCell(cellRule=cellRule, fileName='cells/izhi2007.py', cellName='IzhiCell', cellArgs={'type':'RS'})
+netParams['cellParams'].append(cellRule)  # add dict to list of cell property rules
+
+## SOM cell params
+cellRule = {'label': 'SOM', 'conditions': {'cellType': 'SOM'}, 'sections': {}}
+importCell(cellRule=cellRule, fileName='cells/izhi2007.py', cellName='IzhiCell', cellArgs={'type':'LTS'})
+netParams['cellParams'].append(cellRule)  # add dict to list of cell property rules
+
+## PV cell params
+cellRule = {'label': 'PV', 'conditions': {'cellType': 'PV'}, 'sections': {}}
+importCell(cellRule=cellRule, fileName='cells/izhi2007.py', cellName='IzhiCell', cellArgs={'type':'FS'})
+netParams['cellParams'].append(cellRule)  # add dict to list of cell property rules
+
+
+# Synaptic mechanism parameters
+netParams['synMechParams'] = []
+netParams['synMechParams'].append({'label': 'AMPA', 'mod': 'MyExp2SynBB', 'tau1': 0.05, 'tau2':5.3, 'e': 0})
+netParams['synMechParams'].append({'label': 'NMDA', 'mod': 'MyExp2SynBB', 'tau1': 0.05, 'tau2':5.3, 'e': 0})
+netParams['synMechParams'].append({'label': 'GABAA', 'mod': 'MyExp2SynBB', 'tau1': 0.07, 'tau2': 9.1, 'e': -80})
+netParams['synMechParams'].append({'label': 'GABAB', 'mod': 'MyExp2SynBB', 'tau1': 0.2, 'tau2': 20, 'e': -80})
 
 
 # List of connectivity rules/params
