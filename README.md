@@ -1,5 +1,5 @@
-# M1 Network Model
-## Description
+## M1 Network Model
+### Description
 A multiscale model of mouse primary motor cortex (M1).
 
 The code requires the [netpyne package](https://github.com/Neurosim-lab/netpyne), a NEURON/Python-based modularized framework for network simulations with MPI. Using this modularized structure, user can define different models (including cell types, populations, connectivities, etc.) just by modifying a single parameters file. 
@@ -11,7 +11,7 @@ Additional details of the modelling framework and M1 model can be found here:
  
 The parameter file **M1_ynorm_izhi.py** describes a mouse M1 model with 14 populations; size 300um x 300um x 1350um, has 10,734 Izhikevich cells, 5,050,532 synapses, and cortical depth-dependent connectivity based on multiple published experimental studies.
 
-## Setup and execution
+### Setup and execution
 
 Requires NEURON with Python and MPI support. 
 
@@ -21,10 +21,10 @@ Requires NEURON with Python and MPI support.
 The simulation should produce a raster plot with 54,562 spikes (avg rate of 5.08 Hz) over 1 second, showing ~15 Hz oscillations (see below).
 
 
-![Raster plot](/sim/raster.png?raw=true "Raster plot of simulation")
+![Raster plot](https://raw.githubusercontent.com/OpenSourceBrain/M1NetworkModel/master/sim/raster.png?raw=true "Raster plot of simulation")
 
 
-## Overview of file structure:
+### Overview of file structure:
 
 * **/sim/init.py**: Main executable; calls functions from other modules. Sets what parameter file to use.
 
