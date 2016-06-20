@@ -1,4 +1,4 @@
-# M1NetworkModel
+# M1 Network Model
 ## Description
 A multiscale model of mouse primary motor cortex (M1).
 
