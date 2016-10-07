@@ -13,25 +13,19 @@ MPI usage:
 Contributors: salvadordura@gmail.com
 """
 
-from netpyne import framework as f
-import M1_ynorm_izhi
+from netpyne import sim
+from params import M1_v5 as M1
 
+sim.initialize(
+    simConfig=M1.simConfig, 
+    netParams=M1.netParams)  # create network object and set cfg and net params
+sim.net.createPops()                  # instantiate network populations
+sim.net.createCells()                 # instantiate network cells based on defined populations
+sim.net.connectCells()                # create connections between cells based on params
+sim.setupRecording()              # setup variables to record for each cell (spikes, V traces, etc)
+sim.runSim()                      # run parallel Neuron simulation  
+sim.gatherData()                  # gather spiking data and cell info from each node
+sim.saveData()                    # save params, cell info and sim output to file (pickle,mat,txt,etc)
+sim.analysis.plotData()               # plot spike raster
 
-def runModel(simConfig, netParams):
-    ''' Sequence of commands to run full model '''
-    f.sim.initialize(simConfig = simConfig, netParams = netParams)  # create network object and set cfg and net params
-    f.net.createPops()                  # instantiate network populations
-    f.net.createCells()                 # instantiate network cells based on defined populations
-    f.net.connectCells()                # create connections between cells based on params
-    f.sim.setupRecording()              # setup variables to record for each cell (spikes, V traces, etc)
-    f.sim.runSim()                      # run parallel Neuron simulation  
-    f.sim.gatherData()                  # gather spiking data and cell info from each node
-    f.sim.saveData()                    # save params, cell info and sim output to file (pickle,mat,txt,etc)
-    f.analysis.plotData()               # plot spike raster
-
-
-# Main call
-runModel(                                      # execute sequence of commands to run full model
-    simConfig = M1_ynorm_izhi.simConfig,     # pass simulation config options and network params as arguments
-    netParams = M1_ynorm_izhi.netParams)      
 
