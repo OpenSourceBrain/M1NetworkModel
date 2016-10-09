@@ -14,7 +14,7 @@ Contributors: salvadordura@gmail.com
 """
 
 from netpyne import sim
-import M1_detailed as M1
+import M1_cell as M1
 
 sim.initialize(
     simConfig=M1.simConfig, 
