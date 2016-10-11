@@ -25,8 +25,8 @@ simConfig = specs.SimConfig()   # object of class SimConfig to store the simulat
 ###############################################################################
 
 # Simulation parameters
-simConfig.duration = 1*1e3 # Duration of the simulation, in ms
-simConfig.dt = 0.05 # Internal integration timestep to use
+simConfig.duration = 0.1*1e3 # Duration of the simulation, in ms
+simConfig.dt = 0.01 # Internal integration timestep to use
 simConfig.seeds = {'conn': 1, 'stim': 1, 'loc': 1} # Seeds for randomizers (connectivity, input stimulation and cell locations)
 simConfig.createNEURONObj = 1  # create HOC objects when instantiating network
 simConfig.createPyStruct = 1  # create Python structure (simulator-independent) when instantiating network
@@ -60,14 +60,13 @@ simConfig.recordStep = 0.1 # Step size in ms to save data (eg. V traces, LFP, et
 # Saving
 simConfig.filename = '../data/M1_cell'  # Set file output name
 simConfig.savePickle = False # save to pickle file
-simConfig.saveJson = True # save to json file
+simConfig.saveJson = False # save to json file
 simConfig.saveMat = False # save to mat file
-simConfig.saveDataInclude = ['simData']
 simConfig.gatherOnlySimData = True
 
 # Analysis and plotting 
 simConfig.addAnalysis('plotRaster', True) # Whether or not to plot a raster
-simConfig.addAnalysis('plotTraces', {'include': [('PT_L5B',1)]}) # plot recorded traces for this list of cells
+simConfig.addAnalysis('plotTraces', {'include': [('PT_L5B',0)]}) # plot recorded traces for this list of cells
 #simConfig.addAnalysis('plotConn', True)
 
 ###############################################################################
