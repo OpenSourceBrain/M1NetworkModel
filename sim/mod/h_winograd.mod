@@ -1,1 +1,0 @@
-/usr/site/nrniv/local/mod/h_winograd.mod

@@ -33,19 +33,19 @@ class LTS1 ():
     Hfactor=0.000001
     Htau=0.003
     # kv.mod, na2_mh.mod, cal_mh.mod, kca.mod, cat_traub.mod, ar_traub.mod
-    # for ioc in ['pas', 'kv', 'na', 'ca', 'cadad', 'kca', 'catt', 'ar']: soma.insert(ioc)
-    # soma.taur_cadad = 20 
-    # soma.g_pas=.00007
-    # soma.e_pas=-74 
-    # #soma.ek = -60
-    # soma.ek = -90 + 10
-    # soma.ena=  75 - 20
-    # soma.vshift_na=-18
-    # soma.eca = 140 # from original Mainen patdemo code
-    # h.ion_style("ca_ion",0,1,0,0,0)   # from original Mainen patdemo code
-    # soma.gbar_ar=Hfactor
-    # soma.gbar_na = 7000 * 0.5
-    # soma.gmax_kv = 350 * 0.5
-    # soma.gbar_ca = 30 * 0.5
-    # soma.gmax_kca = 5 * 0.5
-    # soma.gbar_catt=Tfactor
+    for ioc in ['pas', 'kv', 'na', 'ca', 'cadad', 'kca', 'catt', 'ar']: soma.insert(ioc)
+    soma.taur_cadad = 20 
+    soma.g_pas=.00007
+    soma.e_pas=-74 
+    #soma.ek = -60
+    soma.ek = -90 + 10
+    soma.ena=  75 - 20
+    soma.vshift_na=-18
+    soma.eca = 140 # from original Mainen patdemo code
+    h.ion_style("ca_ion",0,1,0,0,0)   # from original Mainen patdemo code
+    soma.gbar_ar=Hfactor
+    soma.gbar_na = 7000 * 0.5
+    soma.gmax_kv = 350 * 0.5
+    soma.gbar_ca = 30 * 0.5
+    soma.gmax_kca = 5 * 0.5
+    soma.gbar_catt=Tfactor

@@ -14,7 +14,7 @@ class BAS1 ():
     self.ID=ID
     self.ty = ty
     self.set_morphology()
-    #self.set_conductances()
+    self.set_conductances()
 
   def set_morphology(self):
     total_area = 10000 # um2

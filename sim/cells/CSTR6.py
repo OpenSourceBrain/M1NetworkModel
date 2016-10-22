@@ -1,27 +1,10 @@
 # simplified corticostriatal cell model (6 compartment)
 from neuron import h
+from __main__ import cfg
 
 Vrest = -80.1220846059
 h.v_init = -85.4137121841
 h.celsius     = 34.0 # for in vitro opt
-
-# these are to be used by h_kole.mod
-h_aslope = 8.60141233799
-h_ascale  =  0.00187536380243
-h_bslope  =  23.5499534933
-h_bscale  =  0.269618020834
-h_ashift  =  124.768772141
-
-# geom properties
-somaL = 23.9455831784
-somaDiam = 44.3019239989
-axonL = 645.793181416
-axonDiam =  0.401349947627
-apicL = 293.606258936
-apicDiam = 2.10072357813
-bdendL = 229.365228526
-bdendDiam = 1.09982284443
-
 # passive properties 
 axonCap =  2.08396763682
 somaCap =  1.89133252551
@@ -32,45 +15,82 @@ axonRM = 1046.05518722
 somaRM = 7274.88168814
 apicRM = 21479.5887648
 bdendRM = 11763.9607778
-
 # Na, K reversal potentials calculated from BenS internal/external solutions via Nernst eq.
 p_ek = -104.0 # these reversal potentials for in vitro conditions
 p_ena = 42.0 
 # h-current
 h.erev_h = h.erev_ih = -37.0 # global
 gbar_h = 1.61656097318e-05
+# these are to be used by h_kole.mod
+h_aslope = 8.60141233799
+h_ascale  =  0.00187536380243
+h_bslope  =  23.5499534933
+h_bscale  =  0.269618020834
+h_ashift  =  124.768772141
+# geom properties
+somaL = 23.9455831784
+somaDiam = 44.3019239989
+axonL = 645.793181416
+axonDiam =  0.401349947627
+apicL = 293.606258936
+apicDiam = 2.10072357813
+bdendL = 229.365228526
+bdendDiam = 1.09982284443
 
-# spiking currents
-gbar_nax = 0.0538908368265
-nax_gbar_axonm = 5.0
-gbar_kdr = 0.019690609625
-kdr_gbar_axonm = 5.0
 # A few kinetic params changed vis-a-vis kdr.mod defaults:
 h.a0n_kdr     = 0.0075 # def 0.02
 h.nmax_kdr    = 20.0 # def 2
 h.vhalfn_kdr = 11.6427471384
-gbar_kap = 0.127795324821
+nax_gbar_axonm = 5.0
+kdr_gbar_axonm = 5.0
 kap_gbar_axonm = 5.0
-# A few kinetic params changed vis-a-vis kap.mod defaults:
-h.vhalfn_kap  = 42.6103053715
-h.nmin_kap    = 0.4 # def 0.1
-h.lmin_kap    = 5.0 # def 2
-h.tq_kap      = -48.7741740888
-h.vhalfl_kap = -30.0952315496
-
-# other ion channel parameters 
-cal_gcalbar = 6.27406319558e-06
-can_gcanbar = 2.3881757857e-06
-cat_gcatbar = 1.10231531492e-06
 calginc = 1.0
-kBK_gpeak = 3.93910496784e-05
-kBK_caVhminShift = 63.7577120517
-cadad_depth = 0.0758798224862
-cadad_taur = 2.50835513312
 
-gbar_nap = 0.0
-gbar_ican = 0.0
-			
+if cfg.usenapican:
+  # spiking currents
+  gbar_nax = 0.0374913745168
+  gbar_kdr = 0.0197553933641
+  gbar_kap = 0.115735819457
+  # A few kinetic params changed vis-a-vis kap.mod defaults:
+  h.vhalfn_kap  = 27.3793527225
+  h.nmin_kap    = 0.4 # def 0.1
+  h.lmin_kap    = 5.0 # def 2
+  h.tq_kap      = -48.1379085553
+  h.vhalfl_kap = -44.8265736205
+  # other ion channel parameters 
+  cal_gcalbar = 4.3901794929e-06
+  can_gcanbar = 3.98333562249e-06
+  cat_gcatbar = 1.00650754508e-06
+  kBK_gpeak = 8.85640990087e-05
+  kBK_caVhminShift = 44.9862597566
+  cadad_depth = 0.237054064611
+  cadad_taur = 86.3145748563
+  # nap,ican on
+  gbar_nap = 0.00443187914503
+  gbar_ican = 0.000136911241449
+else:
+  # spiking currents
+  gbar_nax = 0.0538908368265
+  gbar_kdr = 0.019690609625
+  gbar_kap = 0.127795324821
+  # A few kinetic params changed vis-a-vis kap.mod defaults:
+  h.vhalfn_kap  = 42.6103053715
+  h.nmin_kap    = 0.4 # def 0.1
+  h.lmin_kap    = 5.0 # def 2
+  h.tq_kap      = -48.7741740888
+  h.vhalfl_kap = -30.0952315496
+  # other ion channel parameters 
+  cal_gcalbar = 6.27406319558e-06
+  can_gcanbar = 2.3881757857e-06
+  cat_gcatbar = 1.10231531492e-06
+  kBK_gpeak = 3.93910496784e-05
+  kBK_caVhminShift = 63.7577120517
+  cadad_depth = 0.0758798224862
+  cadad_taur = 2.50835513312
+  # no nap, ican
+  gbar_nap = 0.0
+  gbar_ican = 0.0
+      
 ###############################################################################
 # CSTR6 Cell
 ###############################################################################
@@ -185,11 +205,11 @@ class CSTR6 ():
       sec.gbar_nax    = gbar_nax # Na      
       sec.gbar_kdr    = gbar_kdr # KDR      
       sec.gbar_kap    = gbar_kap # K-A
-    # self.set_somag()
-    # self.set_bdendg()
-    # self.set_apicg()
-    # self.set_axong()
-    # self.set_ihkinetics()
+    self.set_somag()
+    self.set_bdendg()
+    self.set_apicg()
+    self.set_axong()
+    self.set_ihkinetics()
 
   def insert_conductances (self):
     for sec in self.all_sec:
