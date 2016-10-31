@@ -13,6 +13,7 @@ MPI usage:
 Contributors: salvadordura@gmail.com
 """
 
+from neuron import h,gui
 from netpyne import sim
 import M1_cell as M1
 
@@ -28,4 +29,4 @@ sim.gatherData()                  # gather spiking data and cell info from each 
 sim.saveData()                    # save params, cell info and sim output to file (pickle,mat,txt,etc)
 sim.analysis.plotData()               # plot spike raster
 
-
+shape_window = h.PlotShape()

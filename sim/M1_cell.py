@@ -103,7 +103,7 @@ for secName,sec in cellRule['secs'].iteritems(): sec['vinit'] = -70.0432010302
 
 ## create list of populations, where each item contains a dict with the pop params
 netParams.popParams['PT_L5B'] =	{'cellModel':'HH_full', 'cellType':'PT', 'numCells':1}
-netParams.popParams['bgPT'] = {'cellModel': 'NetStim', 'noise': 0.2, 'rate': 20, 'start':0}
+netParams.popParams['bgPT'] = {'cellModel': 'NetStim', 'noise': 0.2, 'rate': 100, 'start':0}
 
 
 # Synaptic mechanism parameters
@@ -125,9 +125,9 @@ synWeightFraction = [0.9, 0.1]
 
 netParams.connParams['bg'] = {'preConds': {'popLabel': 'bgPT'}, 
 	                          'postConds': {'cellType': 'PT'},
-	                          'sec': 'all',
+	                          'sec': 'soma',
 	                          'synMech': ['AMPA', 'NMDA'],
-	                          'weight': 0.5,
+	                          'weight': 0.01,
 	                          'loc': 0.5,
 	                          'delay': 'max(defaultDelay, gauss(5,3))'}
 

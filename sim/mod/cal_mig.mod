@@ -33,7 +33,6 @@ PARAMETER {
   zetam = 2
   vhalfm = 4
   gmm=0.1	
-  ggk
 }
 
 
@@ -53,6 +52,7 @@ ASSIGNED {
   gcal (mho/cm2)
   minf
   tau   (ms)
+  ggk
 }
 
 INITIAL {

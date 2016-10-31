@@ -1,40 +1,40 @@
 # simplified corticostriatal cell model (6 compartment)
 from neuron import h
 
-Vrest = -80.1220846059
-h.v_init = -85.4137121841
+Vrest = -79.8821836579
+h.v_init = -92.8364820902
 h.celsius     = 34.0 # for in vitro opt
 # passive properties 
-axonCap =  2.08396763682
+axonCap =  1.87389705992
 somaCap =  1.89133252551
-apicCap = 2.49636095784
-bdendCap = 2.49995878652
-rall = 85.1389160393
-axonRM = 1046.05518722
-somaRM = 7274.88168814
-apicRM = 21479.5887648
+apicCap = 2.49841939531
+bdendCap = 2.46671987855
+rall = 114.969186163
+axonRM = 3120.59603524
+somaRM = 25551.9729631
+apicRM = 48333.5799025
 bdendRM = 11763.9607778
 # Na, K reversal potentials calculated from BenS internal/external solutions via Nernst eq.
 p_ek = -104.0 # these reversal potentials for in vitro conditions
 p_ena = 42.0 
 # h-current
 h.erev_h = h.erev_ih = -37.0 # global
-gbar_h = 1.61656097318e-05
+gbar_h = 3.13760461868e-05
 # these are to be used by h_kole.mod
-h_aslope = 8.60141233799
-h_ascale  =  0.00187536380243
-h_bslope  =  23.5499534933
-h_bscale  =  0.269618020834
-h_ashift  =  124.768772141
+h_aslope = 7.63692206734
+h_ascale  =  0.00365676240119
+h_bslope  =  37.2740194128
+h_bscale  =  0.26993550346
+h_ashift  =  115.040811905
 # geom properties
-somaL = 23.9455831784
-somaDiam = 44.3019239989
-axonL = 645.793181416
-axonDiam =  0.401349947627
-apicL = 293.606258936
-apicDiam = 2.10072357813
-bdendL = 229.365228526
-bdendDiam = 1.09982284443
+somaL = 48.4123467666
+somaDiam = 28.2149102762
+axonL = 594.292937602
+axonDiam =  1.40966286462
+apicL = 261.904636003
+apicDiam = 1.5831889597
+bdendL = 299.810775175
+bdendDiam = 2.2799248874
 
 # A few kinetic params changed vis-a-vis kdr.mod defaults:
 kdr_vhalfn = 11.6427471384
@@ -44,26 +44,26 @@ kap_gbar_axonm = 5.0
 calginc = 1.0
 
 
-# spiking currents
-gbar_nax = 0.0538908368265
-gbar_kdr = 0.019690609625
-gbar_kap = 0.127795324821
+# spiking currents - from (/u/samn/evoizhi/notebook.dol:57555:1376)
+gbar_nax = 0.130959028831
+gbar_kdr = 0.00712314120552
+gbar_kap = 0.150133627138
 # A few kinetic params changed vis-a-vis kap.mod defaults:
-kap_vhalfn  = 42.6103053715
-kap_tq      = -48.7741740888
-kap_vhalfl = -30.0952315496
+kap_vhalfn  = 32.7885075379
+kap_tq      = -45.5710503134
+kap_vhalfl = -58.7095085201
 # other ion channel parameters 
-cal_gcalbar = 6.27406319558e-06
-can_gcanbar = 2.3881757857e-06
-cat_gcatbar = 1.10231531492e-06
-kBK_gpeak = 3.93910496784e-05
-kBK_caVhminShift = 63.7577120517
-cadad_depth = 0.0758798224862
-cadad_taur = 2.50835513312
+cal_gcalbar = 1.59898943324e-05
+can_gcanbar = 9.28362940481e-05
+cat_gcatbar = 9.31221865345e-05
+kBK_gpeak = 3.90453982482e-05
+kBK_caVhminShift = 43.8900261407
+cadad_depth = 0.119408607923
+cadad_taur = 99.1146852282 
 # no nap, ican
 gbar_nap = 0.0
 gbar_ican = 0.0
-      
+		
 ###############################################################################
 # CSTR6 Cell
 ###############################################################################

@@ -26,10 +26,10 @@ PARAMETER {
 
     gbar    = 0.003     (mho/cm2)
     vhalfn  = 13        (mV)
-    a0n     = 0.02      (/ms)
+    a0n     = 0.0075    (/ms)
     zetan   = -3        (1)
     gmn     = 0.7       (1)
-    nmax    = 2         (1)
+    nmax    = 20        (1)
     q10     = 1
     sh      = 0
 }
@@ -38,7 +38,7 @@ NEURON {
     THREADSAFE
     SUFFIX kdr
     USEION k READ ek WRITE ik
-    RANGE g, gbar, sh, ninf,taun
+    RANGE g, gbar, sh, ninf, taun, vhalfn
 }
 
 STATE {

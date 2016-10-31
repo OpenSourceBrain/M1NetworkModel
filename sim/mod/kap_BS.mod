@@ -33,8 +33,8 @@ PARAMETER {
     zetal   = 3         (1)
     gmn     = 0.55      (1)
     gml     = 1         (1)
-    lmin    = 2         (mS)
-    nmin    = 0.1       (mS)
+    lmin    = 5         (mS)
+    nmin    = 0.4       (mS)
     pw      = -1        (1)
     tq      = -40
     qq      = 5
@@ -46,7 +46,7 @@ PARAMETER {
 NEURON {
     SUFFIX kap
     USEION k READ ek WRITE ik
-    RANGE gbar,g, sh
+    RANGE gbar, g, sh, tq, vhalfn, vhalfl : 
 :        GLOBAL ninf,linf,taul,taun,lmin
 }
 
