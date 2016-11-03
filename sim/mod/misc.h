@@ -5,7 +5,7 @@
 #include <limits.h> /* contains LONG_MAX */
 #include <time.h>
 #include <sys/time.h> 
-#include <values.h>
+//#include <values.h>
 #include <pthread.h>
 
 #if !defined(t)
