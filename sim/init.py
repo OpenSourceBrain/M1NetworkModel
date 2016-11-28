@@ -29,4 +29,6 @@ sim.gatherData()                  # gather spiking data and cell info from each 
 sim.saveData()                    # save params, cell info and sim output to file (pickle,mat,txt,etc)
 sim.analysis.plotData()               # plot spike raster
 
-shape_window = h.PlotShape()
+c=sim.net.cells
+pt=next(cell for cell in c if cell.tags['cellType']=='PT')
+fig=sim.analysis.plotShape(include = ['PT5B'], style = 'O', siz=5)

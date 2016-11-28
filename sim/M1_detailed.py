@@ -116,6 +116,11 @@ for k in ['alldend', 'apicdend','perisom']: cellRule['secLists'][k] = SimpSecD[k
 cellRule = netParams.importCellParams(label='PT_full',conds={'cellType': 'PT', 'cellModel': 'HH_full'},
   fileName='cells/PTcell.hoc', cellName='PTcell', cellArgs = [0, 0,0])
 for secName,sec in cellRule['secs'].iteritems(): sec['vinit'] = -70.0432010302
+cellRule['secLists']['perisom'] = ['soma']
+cellRule['secLists']['perisom'].extend([sec for sec in cellRule.secs if 'dend' in sec])  # soma+basal  
+cellRule['secLists']['alldend'] = [sec for sec in cellRule.secs if ('dend' in sec or 'apic' in sec)] # basal+apical
+cellRule['secLists']['apicdend'] = [sec for sec in cellRule.secs if ('apic' in sec)] # basal+apical
+cellRule['secLists']['spiny'] = [sec for sec in cellRule['secLists']['alldend'] if sec not in ['apic_0', 'apic_1']]
 
 ## CT cell params (6-comp)
 cellRule = netParams.importCellParams(label='CT_6comp',conds={'cellType': 'CT', 'cellModel': 'HH_reduced'},
@@ -321,5 +326,48 @@ netParams.addConnParams(params={'preConds': {'popLabel': 'PV_L6'},
 
 
 
+####################################################################################################
+## Subcellular connectivity (synaptic distributions)
+####################################################################################################   		
+
+# load 1d and 2d density maps
+import numpy
+lenX = 10
+lenY = 30
+maxRatio = 15
+file2d = 'density_scracm18_BS0284_memb_BS0477_morph.dat'
+data2d = numpy.loadtxt(file2d)
+map2d = [[None for _ in range(lenY)] for _ in range(lenX)] 
+for ii in range(lenX): 
+	for jj in range(lenY):
+		map2d[ii][jj] = data2d[ii*30+jj]
+
+
+file1d = 'radial_scracm18_BS0284_memb_BS0477_morph.dat'
+data1d = numpy.loadtxt(file1d)
+map1d = []
+for jj in range(lenY):
+	map1d.append(data1d[jj])
+
+somaY =-735
+spacing = 50
+gridX = range(-spacing*lenX/2, spacing*lenX/2, spacing)
+gridY = range(0, -spacing*lenY, -spacing) # NEURON's axis for cortical depth goes from 0 (pia) to -cfg.sizeY (WM)
+
+IT2_PT_subconn = '2Dmap'
+
+if IT2_PT_subconn == 'uniform':
+	density = 'uniform'
+elif IT2_PT_subconn == '1Dmap':
+	density = {'type': '1Dmap', 'gridX': None, 'gridY': gridY, 'gridValues': map1d, 'somaY': somaY}
+elif IT2_PT_subconn == '2Dmap':
+	density = {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'somaY': somaY} 
+
+netParams.subConnParams['IT2->PT'] = {
+	'preConds': {'popLabel': ['IT2']}, 
+	'postConds': {'popLabel': 'PT5B'},  
+	'sec': 'spiny',
+	'groupSynMechs': ['AMPA', 'NMDA'], 
+	'density': density} 
 
 

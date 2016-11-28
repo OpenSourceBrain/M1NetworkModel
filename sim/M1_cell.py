@@ -30,7 +30,7 @@ simConfig.dt = 0.01 # Internal integration timestep to use
 simConfig.seeds = {'conn': 1, 'stim': 1, 'loc': 1} # Seeds for randomizers (connectivity, input stimulation and cell locations)
 simConfig.createNEURONObj = 1  # create HOC objects when instantiating network
 simConfig.createPyStruct = 1  # create Python structure (simulator-independent) when instantiating network
-simConfig.verbose = 0 # Whether to write diagnostic information on events 
+simConfig.verbose = 1 # Whether to write diagnostic information on events 
 simConfig.hParams = {'celsius': 34, 'v_init': -65}  # set celsius temp
 
 # Recording 
@@ -99,11 +99,19 @@ SimpSecD['perisom'] = ['soma']
 cellRule = netParams.importCellParams(label='PT_full',conds={'cellType': 'PT', 'cellModel': 'HH_full'},
   fileName='cells/PTcell.hoc', cellName='PTcell', cellArgs = [0, 0,0])
 for secName,sec in cellRule['secs'].iteritems(): sec['vinit'] = -70.0432010302
+cellRule['secLists']['perisom'] = ['soma']
+cellRule['secLists']['perisom'].extend([sec for sec in cellRule.secs if 'dend' in sec])  # soma+basal  
+cellRule['secLists']['alldend'] = [sec for sec in cellRule.secs if ('dend' in sec or 'apic' in sec)] # basal+apical
+cellRule['secLists']['apicdend'] = [sec for sec in cellRule.secs if ('apic' in sec)] # basal+apical
+cellRule['secLists']['spiny'] = [sec for sec in cellRule['secLists']['alldend'] if sec not in ['apic_0', 'apic_1']]
 
 
 ## create list of populations, where each item contains a dict with the pop params
-netParams.popParams['PT_L5B'] =	{'cellModel':'HH_full', 'cellType':'PT', 'numCells':1}
-netParams.popParams['bgPT'] = {'cellModel': 'NetStim', 'noise': 0.2, 'rate': 100, 'start':0}
+netParams.popParams['PT5B'] =	{'cellModel':'HH_full', 'cellType':'PT', 'numCells':1}
+
+nbkg = 100
+for i in range(nbkg): # create multiple background inputs 
+	netParams.popParams['bgPT_'+str(i)] = {'cellModel': 'NetStim', 'noise': 0.2, 'rate': 100, 'start':0}
 
 
 # Synaptic mechanism parameters
@@ -122,12 +130,57 @@ IFastSynMech = ['GABAA']
 # Connectivity rules/params
 synWeightFraction = [0.9, 0.1]
 
-
-netParams.connParams['bg'] = {'preConds': {'popLabel': 'bgPT'}, 
+netParams.connParams['bg'] = {'preConds': {'cellModel': 'NetStim'}, 
 	                          'postConds': {'cellType': 'PT'},
 	                          'sec': 'soma',
 	                          'synMech': ['AMPA', 'NMDA'],
 	                          'weight': 0.01,
 	                          'loc': 0.5,
 	                          'delay': 'max(defaultDelay, gauss(5,3))'}
+
+
+####################################################################################################
+## Subcellular connectivity (synaptic distributions)
+####################################################################################################   		
+
+# load 1d and 2d density maps
+import numpy
+lenX = 10
+lenY = 30
+maxRatio = 15
+file2d = 'density_scracm18_BS0284_memb_BS0477_morph.dat'
+data2d = numpy.loadtxt(file2d)
+map2d = [[None for _ in range(lenY)] for _ in range(lenX)] 
+for ii in range(lenX): 
+	for jj in range(lenY):
+		map2d[ii][jj] = data2d[ii*30+jj]
+
+
+file1d = 'radial_scracm18_BS0284_memb_BS0477_morph.dat'
+data1d = numpy.loadtxt(file1d)
+map1d = []
+for jj in range(lenY):
+	map1d.append(data1d[jj])
+
+somaY =-735
+spacing = 50
+gridX = range(-spacing*lenX/2, spacing*lenX/2, spacing)
+gridY = range(0, -spacing*lenY, -spacing) # NEURON's axis for cortical depth goes from 0 (pia) to -cfg.sizeY (WM)
+
+PT_subconn = '2Dmap'
+
+if PT_subconn == 'uniform':
+	density = 'uniform'
+elif PT_subconn == '1Dmap':
+	density = {'type': '1Dmap', 'gridX': None, 'gridY': gridY, 'gridValues': map1d, 'somaY': somaY}
+elif PT_subconn == '2Dmap':
+	density = {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'somaY': somaY} 
+
+netParams.subConnParams['bg->PT'] = {
+	'preConds': {'cellModel': 'NetStim'}, 
+	'postConds': {'popLabel': 'PT5B'},  
+	'sec': 'spiny',
+	'groupSynMechs': ['AMPA', 'NMDA'], 
+	'density': density} 
+
 
