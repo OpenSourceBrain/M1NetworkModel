@@ -8,8 +8,7 @@ simConfig is an object containing a set of simulation configurations using a sta
 Contributors: salvadordura@gmail.com
 """
 
-from netpyne import specs
-import pickle
+from netpyne import specsM
 
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
 simConfig = specs.SimConfig()   # object of class SimConfig to store the simulation configuration
@@ -19,55 +18,6 @@ simConfig = specs.SimConfig()   # object of class SimConfig to store the simulat
 # M1 6-LAYER ynorm-BASED MODEL
 #
 ###############################################################################
-
-###############################################################################
-# SIMULATION CONFIGURATION
-###############################################################################
-
-# Simulation parameters
-simConfig.duration = 0.1*1e3 # Duration of the simulation, in ms
-simConfig.dt = 0.01 # Internal integration timestep to use
-simConfig.seeds = {'conn': 1, 'stim': 1, 'loc': 1} # Seeds for randomizers (connectivity, input stimulation and cell locations)
-simConfig.createNEURONObj = 1  # create HOC objects when instantiating network
-simConfig.createPyStruct = 1  # create Python structure (simulator-independent) when instantiating network
-simConfig.verbose = 1 # Whether to write diagnostic information on events 
-simConfig.hParams = {'celsius': 34, 'v_init': -65}  # set celsius temp
-
-# Recording 
-simConfig.recordCells = [('PT_L5B',0)]  # list of cells to record from (those selected for plotting below, will be recorded automatically)
-simConfig.recordTraces = {'V_soma':{'sec':'soma','loc':0.5,'var':'v'}}
-
-# record for 5-comp
-# simConfig['recordTraces'] =	{'VAdend1':{'sec':'Adend1','loc':0.5,'var':'v'},
-# 							'Vsoma': {'sec':'soma','loc':0.5,'var':'v'}} 
-
-# record for full cell
-							#'V_basal':{'sec':'dend_30','loc':0.5,'var':'v'}}
-							# 'V_maintrunk':{'sec':'apic_10','loc':0.5,'var':'v'},
-							# 'V_oblique':{'sec':'apic_90','loc':0.5,'var':'v'},
-							# 'V_uppertrunk':{'sec':'apic_46','loc':0.5,'var':'v'},
-							# 'V_tuft':{'sec':'apic_60','loc':0.5,'var':'v'},
-							# 'V_axon':{'sec':'axon','loc':0.5,'var':'v'}} 
-
-# record syns
-# simConfig['recordTraces'] = {'AMPA_i': {'sec':'soma', 'loc':'0.5', 'synMech':'AMPA', 'var':'i'},
-#     						   'NMDA_i': {'sec':'soma', 'loc':'0.5', 'synMech':'NMDA', 'var':'iNMDA'}}  # Dict of traces to record
-
-
-simConfig.recordStims = False  # record spikes of cell stims
-simConfig.recordStep = 0.1 # Step size in ms to save data (eg. V traces, LFP, etc)
-
-# Saving
-simConfig.filename = '../data/M1_cell'  # Set file output name
-simConfig.savePickle = False # save to pickle file
-simConfig.saveJson = False # save to json file
-simConfig.saveMat = False # save to mat file
-simConfig.gatherOnlySimData = True
-
-# Analysis and plotting 
-simConfig.addAnalysis('plotRaster', True) # Whether or not to plot a raster
-simConfig.addAnalysis('plotTraces', {'include': [('PT_L5B',0)]}) # plot recorded traces for this list of cells
-#simConfig.addAnalysis('plotConn', True)
 
 ###############################################################################
 # NETWORK PARAMETERS
@@ -95,6 +45,12 @@ SimpSecD['alldend'] = ['Adend2'] # ['Adend1', 'Adend2', 'Adend3', 'Bdend']
 SimpSecD['apicdend'] = ['Adend1', 'Adend2', 'Adend3']
 SimpSecD['perisom'] = ['soma']
 
+## PT cell params (6-comp)
+cellRule = netParams.importCellParams(label='PT_6comp',conds={'cellType': 'PT', 'cellModel': 'HH_reduced'},
+  fileName='cells/SPI6.py', cellName='SPI6')
+for secName,sec in cellRule['secs'].iteritems(): sec['vinit'] = -75.0413649414 
+for k in ['alldend', 'apicdend','perisom']: cellRule['secLists'][k] = SimpSecD[k]
+
 ## PT cell params (full)
 cellRule = netParams.importCellParams(label='PT_full',conds={'cellType': 'PT', 'cellModel': 'HH_full'},
   fileName='cells/PTcell.hoc', cellName='PTcell', cellArgs = [0, 0,0])
@@ -107,7 +63,7 @@ cellRule['secLists']['spiny'] = [sec for sec in cellRule['secLists']['alldend'] 
 
 
 ## create list of populations, where each item contains a dict with the pop params
-netParams.popParams['PT5B'] =	{'cellModel':'HH_full', 'cellType':'PT', 'numCells':1}
+netParams.popParams['PT5B'] =	{'cellModel':'HH_fulle', 'cellType':'PT', 'numCells':1}
 
 nbkg = 100
 for i in range(nbkg): # create multiple background inputs 
@@ -178,7 +134,7 @@ elif PT_subconn == '2Dmap':
 
 netParams.subConnParams['bg->PT'] = {
 	'preConds': {'cellModel': 'NetStim'}, 
-	'postConds': {'popLabel': 'PT5B'},  
+	'postConds': {'popLabel': 'PT5B', 'cellModel': 'HH_full'},  
 	'sec': 'spiny',
 	'groupSynMechs': ['AMPA', 'NMDA'], 
 	'density': density} 
