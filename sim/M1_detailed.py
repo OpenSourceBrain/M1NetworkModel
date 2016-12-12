@@ -3,8 +3,6 @@ params.py
 
 netParams is an object containing a set of network parameters using a standardized structure
 
-simConfig is an object containing a set of simulation configurations using a standardized structure
-
 Contributors: salvadordura@gmail.com
 """
 
@@ -12,63 +10,12 @@ from netpyne import specs
 import pickle
 
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
-simConfig = specs.SimConfig()   # object of class SimConfig to store the simulation configuration
 
 ###############################################################################
 #
 # M1 6-LAYER ynorm-BASED MODEL
 #
 ###############################################################################
-
-###############################################################################
-# SIMULATION CONFIGURATION
-###############################################################################
-
-# Simulation parameters
-simConfig.duration = 0.1*1e3 # Duration of the simulation, in ms
-simConfig.dt = 0.05 # Internal integration timestep to use
-simConfig.seeds = {'conn': 1, 'stim': 1, 'loc': 1} # Seeds for randomizers (connectivity, input stimulation and cell locations)
-simConfig.createNEURONObj = 1  # create HOC objects when instantiating network
-simConfig.createPyStruct = 1  # create Python structure (simulator-independent) when instantiating network
-simConfig.verbose = 0 # Whether to write diagnostic information on events 
-simConfig.hParams = {'celsius': 34, 'v_init': -65}  # set celsius temp
-
-# Recording 
-simConfig.recordCells = [('PT_L5B',0), ('IT_L5A',0), ('IT_L5B',0)]  # list of cells to record from (those selected for plotting below, will be recorded automatically)
-simConfig.recordTraces = {'V_soma':{'sec':'soma','loc':0.5,'var':'v'}}
-
-# record for 5-comp
-# simConfig['recordTraces'] =	{'VAdend1':{'sec':'Adend1','loc':0.5,'var':'v'},
-# 							'Vsoma': {'sec':'soma','loc':0.5,'var':'v'}} 
-
-# record for full cell
-							#'V_basal':{'sec':'dend_30','loc':0.5,'var':'v'}}
-							# 'V_maintrunk':{'sec':'apic_10','loc':0.5,'var':'v'},
-							# 'V_oblique':{'sec':'apic_90','loc':0.5,'var':'v'},
-							# 'V_uppertrunk':{'sec':'apic_46','loc':0.5,'var':'v'},
-							# 'V_tuft':{'sec':'apic_60','loc':0.5,'var':'v'},
-							# 'V_axon':{'sec':'axon','loc':0.5,'var':'v'}} 
-
-# record syns
-# simConfig['recordTraces'] = {'AMPA_i': {'sec':'soma', 'loc':'0.5', 'synMech':'AMPA', 'var':'i'},
-#     						   'NMDA_i': {'sec':'soma', 'loc':'0.5', 'synMech':'NMDA', 'var':'iNMDA'}}  # Dict of traces to record
-
-
-simConfig.recordStims = False  # record spikes of cell stims
-simConfig.recordStep = 0.1 # Step size in ms to save data (eg. V traces, LFP, etc)
-
-# Saving
-simConfig.filename = '../data/M1_detailed'  # Set file output name
-simConfig.savePickle = False # save to pickle file
-simConfig.saveJson = True # save to json file
-simConfig.saveMat = False # save to mat file
-simConfig.saveDataInclude = ['simData']
-simConfig.gatherOnlySimData = True
-
-# Analysis and plotting 
-simConfig.addAnalysis('plotRaster', True) # Whether or not to plot a raster
-simConfig.addAnalysis('plotTraces', {'include': [('IT_L23',0), ('PT_L5B',1), ('PV_L23',2), ('SOM_L5',3)]}) # plot recorded traces for this list of cells
-#simConfig.addAnalysis('plotConn', True)
 
 ###############################################################################
 # NETWORK PARAMETERS
@@ -269,6 +216,26 @@ if addEtoI:
 # Inh -> All
 ###################################################################################################
 
+if addItoI:
+	labelsConns = ['FS', 'LTS']
+	labelPostBins = ['FS/LTS', 'FS/LTS']
+	labelPreBins = ['FS/LTS', 'FS/LTS']
+	preTypes = ['IT', 'PT', 'CT']
+	postTypes = ['PV', 'SOM']
+	ESynMech = ['AMPA','NMDA']
+
+	for i,(label, preBinLabel, postBinLabel) in enumerate(zip(labelsConns,labelPreBins, labelPostBins)):
+		for ipre, preBin in enumerate(bins[preBinLabel]):
+			for ipost, postBin in enumerate(bins[postBinLabel]):
+				netParams.addConnParams(params={'preConds': {'cellType': preTypes, 'ynorm': preBin},
+												'postConds': {'cellType': postTypes[i], 'ynorm': postBin},
+												'synMech': ESynMech,
+												'probability': pmat[label][ipost,ipre],
+												'weight': wmat[label][ipost,ipre],
+												'synWeightFraction': synWeightFraction,
+												'delay': 'defaultDelay+dist_3D/propVelocity'})
+
+
 netParams.addConnParams(params={'preConds': {'popLabel': 'SOM_L23'},
 'postConds': {'ynorm': [0.12,0.31]},
 'synMech': 'GABAB',
@@ -330,10 +297,12 @@ netParams.addConnParams(params={'preConds': {'popLabel': 'PV_L6'},
 ## Subcellular connectivity (synaptic distributions)
 ####################################################################################################   		
 
-# load 1d and 2d density maps
+# load 2d density maps
 import numpy
 lenX = 10
 lenY = 30
+somaY = -735
+spacing = 50
 maxRatio = 15
 file2d = 'density_scracm18_BS0284_memb_BS0477_morph.dat'
 data2d = numpy.loadtxt(file2d)
@@ -341,33 +310,14 @@ map2d = [[None for _ in range(lenY)] for _ in range(lenX)]
 for ii in range(lenX): 
 	for jj in range(lenY):
 		map2d[ii][jj] = data2d[ii*30+jj]
-
-
-file1d = 'radial_scracm18_BS0284_memb_BS0477_morph.dat'
-data1d = numpy.loadtxt(file1d)
-map1d = []
-for jj in range(lenY):
-	map1d.append(data1d[jj])
-
-somaY =-735
-spacing = 50
 gridX = range(-spacing*lenX/2, spacing*lenX/2, spacing)
 gridY = range(0, -spacing*lenY, -spacing) # NEURON's axis for cortical depth goes from 0 (pia) to -cfg.sizeY (WM)
-
-IT2_PT_subconn = '2Dmap'
-
-if IT2_PT_subconn == 'uniform':
-	density = 'uniform'
-elif IT2_PT_subconn == '1Dmap':
-	density = {'type': '1Dmap', 'gridX': None, 'gridY': gridY, 'gridValues': map1d, 'somaY': somaY}
-elif IT2_PT_subconn == '2Dmap':
-	density = {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'somaY': somaY} 
 
 netParams.subConnParams['IT2->PT'] = {
 	'preConds': {'popLabel': ['IT2']}, 
 	'postConds': {'popLabel': 'PT5B'},  
 	'sec': 'spiny',
 	'groupSynMechs': ['AMPA', 'NMDA'], 
-	'density': density} 
+	'density': {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'somaY': somaY} 
 
 

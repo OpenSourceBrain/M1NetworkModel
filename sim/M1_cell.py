@@ -162,7 +162,7 @@ map1d = []
 for jj in range(lenY):
 	map1d.append(data1d[jj])
 
-somaY =-735
+fixedSomaY =-735
 spacing = 50
 gridX = range(-spacing*lenX/2, spacing*lenX/2, spacing)
 gridY = range(0, -spacing*lenY, -spacing) # NEURON's axis for cortical depth goes from 0 (pia) to -cfg.sizeY (WM)
@@ -172,9 +172,9 @@ PT_subconn = '2Dmap'
 if PT_subconn == 'uniform':
 	density = 'uniform'
 elif PT_subconn == '1Dmap':
-	density = {'type': '1Dmap', 'gridX': None, 'gridY': gridY, 'gridValues': map1d, 'somaY': somaY}
+	density = {'type': '1Dmap', 'gridX': None, 'gridY': gridY, 'gridValues': map1d, 'fixedSomaY': fixedSomaY}
 elif PT_subconn == '2Dmap':
-	density = {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'somaY': somaY} 
+	density = {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'fixedSomaY': fixedSomaY} 
 
 netParams.subConnParams['bg->PT'] = {
 	'preConds': {'cellModel': 'NetStim'}, 
