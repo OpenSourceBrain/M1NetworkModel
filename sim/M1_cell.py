@@ -100,9 +100,12 @@ netParams.connParams['bg'] = {'preConds': {'cellModel': 'NetStim'},
 ####################################################################################################   		
 
 # load 1d and 2d density maps
+# load 2d density maps
 import numpy
 lenX = 10
 lenY = 30
+somaY = -735
+spacing = 50
 maxRatio = 15
 file2d = 'density_scracm18_BS0284_memb_BS0477_morph.dat'
 data2d = numpy.loadtxt(file2d)
@@ -110,33 +113,14 @@ map2d = [[None for _ in range(lenY)] for _ in range(lenX)]
 for ii in range(lenX): 
 	for jj in range(lenY):
 		map2d[ii][jj] = data2d[ii*30+jj]
-
-
-file1d = 'radial_scracm18_BS0284_memb_BS0477_morph.dat'
-data1d = numpy.loadtxt(file1d)
-map1d = []
-for jj in range(lenY):
-	map1d.append(data1d[jj])
-
-fixedSomaY =-735
-spacing = 50
 gridX = range(-spacing*lenX/2, spacing*lenX/2, spacing)
 gridY = range(0, -spacing*lenY, -spacing) # NEURON's axis for cortical depth goes from 0 (pia) to -cfg.sizeY (WM)
 
-PT_subconn = '2Dmap'
-
-if PT_subconn == 'uniform':
-	density = 'uniform'
-elif PT_subconn == '1Dmap':
-	density = {'type': '1Dmap', 'gridX': None, 'gridY': gridY, 'gridValues': map1d, 'fixedSomaY': fixedSomaY}
-elif PT_subconn == '2Dmap':
-	density = {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'fixedSomaY': fixedSomaY} 
-
-netParams.subConnParams['bg->PT'] = {
-	'preConds': {'cellModel': 'NetStim'}, 
+netParams.subConnParams['IT2->PT'] = {
+	'preConds': {'popLabel': ['IT2']}, 
 	'postConds': {'popLabel': 'PT5B', 'cellModel': 'HH_full'},  
 	'sec': 'spiny',
 	'groupSynMechs': ['AMPA', 'NMDA'], 
-	'density': density} 
+	'density': {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'somaY': somaY} 
 
 
