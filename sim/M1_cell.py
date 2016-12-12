@@ -121,6 +121,6 @@ netParams.subConnParams['IT2->PT'] = {
 	'postConds': {'popLabel': 'PT5B', 'cellModel': 'HH_full'},  
 	'sec': 'spiny',
 	'groupSynMechs': ['AMPA', 'NMDA'], 
-	'density': {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'somaY': somaY} 
+	'density': {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'somaY': somaY}}
 
 
