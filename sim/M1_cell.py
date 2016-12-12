@@ -8,7 +8,7 @@ simConfig is an object containing a set of simulation configurations using a sta
 Contributors: salvadordura@gmail.com
 """
 
-from netpyne import specsM
+from netpyne import specs
 
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
 simConfig = specs.SimConfig()   # object of class SimConfig to store the simulation configuration
@@ -63,7 +63,7 @@ cellRule['secLists']['spiny'] = [sec for sec in cellRule['secLists']['alldend'] 
 
 
 ## create list of populations, where each item contains a dict with the pop params
-netParams.popParams['PT5B'] =	{'cellModel':'HH_fulle', 'cellType':'PT', 'numCells':1}
+netParams.popParams['PT5B'] =	{'cellModel':'HH_full', 'cellType':'PT', 'numCells':1}
 
 nbkg = 100
 for i in range(nbkg): # create multiple background inputs 
