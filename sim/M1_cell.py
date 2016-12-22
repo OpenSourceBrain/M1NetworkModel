@@ -11,7 +11,8 @@ Contributors: salvadordura@gmail.com
 from netpyne import specs
 
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
-simConfig = specs.SimConfig()   # object of class SimConfig to store the simulation configuration
+
+from __main__ import cfg  # import SimConfig object with params from parent module
 
 ###############################################################################
 #
@@ -65,9 +66,9 @@ cellRule['secLists']['spiny'] = [sec for sec in cellRule['secLists']['alldend'] 
 ## create list of populations, where each item contains a dict with the pop params
 netParams.popParams['PT5B'] =	{'cellModel':'HH_full', 'cellType':'PT', 'numCells':1}
 
-nbkg = 100
+nbkg = 1
 for i in range(nbkg): # create multiple background inputs 
-	netParams.popParams['bgPT_'+str(i)] = {'cellModel': 'NetStim', 'noise': 0.2, 'rate': 100, 'start':0}
+	netParams.popParams['bgPT_'+str(i)] = {'cellModel': 'NetStim', 'noise': 0.0, 'rate': 100, 'start': 200, 'number': 1}
 
 
 # Synaptic mechanism parameters
@@ -88,10 +89,10 @@ synWeightFraction = [0.9, 0.1]
 
 netParams.connParams['bg'] = {'preConds': {'cellModel': 'NetStim'}, 
 	                          'postConds': {'cellType': 'PT'},
-	                          'sec': 'soma',
+	                          'sec': cfg.sec,
 	                          'synMech': ['AMPA', 'NMDA'],
-	                          'weight': 0.01,
-	                          'loc': 0.5,
+	                          'weight': cfg.weight,
+	                          'loc': cfg.loc,
 	                          'delay': 'max(defaultDelay, gauss(5,3))'}
 
 
@@ -99,28 +100,31 @@ netParams.connParams['bg'] = {'preConds': {'cellModel': 'NetStim'},
 ## Subcellular connectivity (synaptic distributions)
 ####################################################################################################   		
 
-# load 1d and 2d density maps
-import numpy
-lenX = 10
-lenY = 30
-maxRatio = 15
+subcell = 0
 
-file1d = 'radial_scracm18_BS0284_memb_BS0477_morph.dat'
-data1d = numpy.loadtxt(file1d)
-map1d = []
-for jj in range(lenY):
-	map1d.append(data1d[jj])
+if subcell:
+	# load 1d and 2d density maps
+	import numpy
+	lenX = 10
+	lenY = 30
+	maxRatio = 15
 
-fixedSomaY =-735
-spacing = 50
-gridX = range(-spacing*lenX/2, spacing*lenX/2, spacing)
-gridY = range(0, -spacing*lenY, -spacing) # NEURON's axis for cortical depth goes from 0 (pia) to -cfg.sizeY (WM)
+	file1d = 'radial_scracm18_BS0284_memb_BS0477_morph.dat'
+	data1d = numpy.loadtxt(file1d)
+	map1d = []
+	for jj in range(lenY):
+		map1d.append(data1d[jj])
 
-netParams.subConnParams['bg->PT'] = {
-	'preConds': {'cellModel': 'NetStim'}, 
-	'postConds': {'popLabel': 'PT5B', 'cellModel': 'HH_full'},  
-	'sec': 'spiny',
-	'groupSynMechs': ['AMPA', 'NMDA'], 
-	'density': {'type': '1Dmap', 'gridX': None, 'gridY': gridY, 'gridValues': map1d, 'fixedSomaY': fixedSomaY}} 
+	fixedSomaY =-735
+	spacing = 50
+	gridX = range(-spacing*lenX/2, spacing*lenX/2, spacing)
+	gridY = range(0, -spacing*lenY, -spacing) # NEURON's axis for cortical depth goes from 0 (pia) to -cfg.sizeY (WM)
+
+	netParams.subConnParams['bg->PT'] = {
+		'preConds': {'cellModel': 'NetStim'}, 
+		'postConds': {'popLabel': 'PT5B', 'cellModel': 'HH_full'},  
+		'sec': 'spiny',
+		'groupSynMechs': ['AMPA', 'NMDA'], 
+		'density': {'type': '1Dmap', 'gridX': None, 'gridY': gridY, 'gridValues': map1d, 'fixedSomaY': fixedSomaY}} 
 
 

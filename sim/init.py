@@ -13,13 +13,15 @@ MPI usage:
 Contributors: salvadordura@gmail.com
 """
 
-from neuron import h,gui
 from netpyne import sim
-import M1_cell as M1
+
+cfg, _ = sim.readCmdLineArgs()
+from M1_cell import netParams 
+
 
 sim.initialize(
-    simConfig=M1.simConfig, 
-    netParams=M1.netParams)  # create network object and set cfg and net params
+    simConfig=cfg, 
+    netParams=netParams)  # create network object and set cfg and net params
 sim.net.createPops()                  # instantiate network populations
 sim.net.createCells()                 # instantiate network cells based on defined populations
 sim.net.connectCells()                # create connections between cells based on params
@@ -29,6 +31,8 @@ sim.gatherData()                  # gather spiking data and cell info from each 
 sim.saveData()                    # save params, cell info and sim output to file (pickle,mat,txt,etc)
 sim.analysis.plotData()               # plot spike raster
 
-c=sim.net.cells
-pt=next(cell for cell in c if cell.tags['cellType']=='PT')
-fig=sim.analysis.plotShape(include = ['PT5B'], style = 'O', siz=5)
+
+# from neuron import h,gui
+# c=sim.net.cells
+# pt=next(cell for cell in c if cell.tags['cellType']=='PT')
+# fig=sim.analysis.plotShape(include = ['PT5B'], style = 'O', siz=5)
