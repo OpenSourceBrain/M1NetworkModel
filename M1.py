@@ -44,7 +44,7 @@ simConfig.recordStim = False  # record spikes of cell stims
 simConfig.recordStep = 0.1 # Step size in ms to save data (eg. V traces, LFP, etc)
 
 # Saving
-simConfig.filename = '../data/M1_ynorm_izhi'  # Set file output name
+simConfig.filename = 'M1_ynorm_izhi'  # Set file output name
 simConfig.saveFileStep = 1000 # step size in ms to save data to disk
 simConfig.savePickle = False # save to pickle file
 simConfig.saveJson = False # save to json file
@@ -55,9 +55,10 @@ simConfig.saveHDF5 = False # save to HDF5 file
 
 
 # Analysis and plotting 
-simConfig.addAnalysis('plotRaster', True) # Whether or not to plot a raster
-simConfig.addAnalysis('plotTraces', {'include': [('IT_L23',20), ('PT_L5B',20)]}) # plot recorded traces for this list of cells
-simConfig.addAnalysis('plot2Dnet', {'showConns': False})
+simConfig.analysis['plotRaster'] = {'orderInverse': True, 'marker': '.', 'dpi': 300, 'saveFig': 'raster.png'} # Whether or not to plot a raster
+simConfig.analysis['plotTraces'] = {'include': [('IT_L23',20), ('PT_L5B',20)]} # plot recorded traces for this list of cells
+simConfig.analysis['plot2Dnet'] = {'showConns': False}
+
 
 ###############################################################################
 # NETWORK PARAMETERS

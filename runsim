@@ -7,5 +7,5 @@ rm *.pyc
 numprocesses=$1; if [ -z $numprocesses ]; then numprocesses=4; fi # Number of processes to use
 shift # Eliminate first argument
 
-mpiexec -np $numprocesses nrniv -python -mpi init.py $@ # Run the model
+mpiexec -np $numprocesses nrniv -python -mpi M1_run.py $@ # Run the model
 
