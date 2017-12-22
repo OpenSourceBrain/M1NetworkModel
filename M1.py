@@ -24,8 +24,8 @@ simConfig = specs.SimConfig()   # object of class SimConfig to store the simulat
 ###############################################################################
 
 # Simulation parameters
-simConfig.duration = 1*1e3 # Duration of the simulation, in ms
-simConfig.dt = 0.1 # Internal integration timestep to use
+simConfig.duration = 1.0*1e3 # Duration of the simulation, in ms
+simConfig.dt = 0.05 # Internal integration timestep to use
 simConfig.seeds = {'conn': 1, 'stim': 1, 'loc': 1} # Seeds for randomizers (connectivity, input stimulation and cell locations)
 simConfig.createNEURONObj = 1  # create HOC objects when instantiating network
 simConfig.createPyStruct = 1  # create Python structure (simulator-independent) when instantiating network
@@ -56,7 +56,7 @@ simConfig.saveHDF5 = False # save to HDF5 file
 
 # Analysis and plotting 
 simConfig.analysis['plotRaster'] = {'orderInverse': True, 'marker': '.', 'dpi': 300, 'saveFig': 'raster.png'} # Whether or not to plot a raster
-simConfig.analysis['plotTraces'] = {'include': [('IT_L23',20), ('PT_L5B',20)]} # plot recorded traces for this list of cells
+simConfig.analysis['plotTraces'] = {'include': [('IT_L23',2),('IT_L5A',2), ('PT_L5B',2), ('PV_L23',2)]} # plot recorded traces for this list of cells
 simConfig.analysis['plot2Dnet'] = {'showConns': False}
 
 
@@ -67,13 +67,13 @@ simConfig.analysis['plot2Dnet'] = {'showConns': False}
 
 # General network parameters
 netParams.scale = 1 # Scale factor for number of cells
-netParams.sizeX = 300 # x-dimension (horizontal length) size in um
+netParams.sizeX = 30 # x-dimension (horizontal length) size in um
 netParams.sizeY = 1350 # y-dimension (vertical height or cortical depth) size in um
-netParams.sizeZ = 300 # z-dimension (horizontal depth) size in um
+netParams.sizeZ = 30 # z-dimension (horizontal depth) size in um
 
 ## General connectivity parameters
-netParams.scaleConnWeight = 0.05 # Connection weight scale factor
-netParams.scaleConnWeightNetStims = 1.0 # Connection weight scale factor for NetStims
+netParams.scaleConnWeight = 0.01 # Connection weight scale factor
+netParams.scaleConnWeightNetStims = 0.25 # Connection weight scale factor for NetStims
 netParams.defaultDelay = 2.0 # default conn delay (ms)
 netParams.propVelocity = 100.0 # propagation velocity (um/ms)
 netParams.probLambda = 100.0  # length constant (lambda) for connection probability decay (um)
@@ -100,6 +100,7 @@ izhiParams['RS'] = {'mod':'Izhi2007b', 'C':1, 'k':0.7, 'vr':-60, 'vt':-40, 'vpea
 izhiParams['IB'] = {'mod':'Izhi2007b', 'C':1.5, 'k':1.2, 'vr':-75, 'vt':-45, 'vpeak':50, 'a':0.01, 'b':5, 'c':-56, 'd':130, 'celltype':2}
 izhiParams['LTS'] = {'mod':'Izhi2007b', 'C':1.0, 'k':1.0, 'vr':-56, 'vt':-42, 'vpeak':40, 'a':0.03, 'b':8, 'c':-53, 'd':20, 'celltype':4}
 izhiParams['FS'] = {'mod':'Izhi2007b', 'C':0.2, 'k':1.0, 'vr':-55, 'vt':-40, 'vpeak':25, 'a':0.2, 'b':-2, 'c':-45, 'd':-55, 'celltype':5}
+
 
 ## IT cell params
 cellRule = {'conds': {'cellType': 'IT'}, 'secs': {}}
@@ -137,24 +138,24 @@ cellRule['secs']['soma']['pointps']['Izhi'] = izhiParams['FS']
 netParams.cellParams['PV'] = cellRule  # add dict to list of cell properties
 
 # Synaptic mechanism parameters
-netParams.synMechParams['AMPA'] = {'mod': 'Exp2Syn', 'tau1': 0.05, 'tau2': 5.3, 'e': 0}  # AMPA
+netParams.synMechParams['AMPA'] = {'mod': 'Exp2Syn', 'tau1': 0.05, 'tau2': 2.3, 'e': 0}  # AMPA
 netParams.synMechParams['NMDA'] = {'mod': 'Exp2Syn', 'tau1': 0.15, 'tau2': 15, 'e': 0}  # NMDA
 netParams.synMechParams['GABAA'] = {'mod': 'Exp2Syn', 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAA
 netParams.synMechParams['GABAB'] = {'mod': 'Exp2Syn', 'tau1': 0.07, 'tau2': 9.1, 'e': -80}  # GABAB
 
 
 # Stimulation parameters
-netParams.stimSourceParams['background_E']  = {'type': 'NetStim', 'rate': 20, 'noise': 0.5} # background inputs to Exc
-netParams.stimSourceParams['background_I']  = {'type': 'NetStim', 'rate': 20, 'noise': 0.5} # background inputs to Inh
+netParams.stimSourceParams['background_E']  = {'type': 'NetStim', 'rate': 20, 'noise': 1.0} # background inputs to Exc
+netParams.stimSourceParams['background_I']  = {'type': 'NetStim', 'rate': 20, 'noise': 1.0} # background inputs to Inh
 
 netParams.stimTargetParams['bgE->IT,CT'] = {'source': 'background_E', 'conds': {'cellType': ['IT','CT']}, 
-                                            'synMech': 'NMDA', 'weight': 0.1, 'delay': 'normal(5,3)'}  
+                                            'synMech': 'AMPA', 'weight': 0.1, 'delay': '2+normal(5,3)'}  
 netParams.stimTargetParams['bgE->PT'] = {'source': 'background_E', 'conds': {'cellType': ['PT']}, 
-                                            'synMech': 'NMDA', 'weight': 0.1, 'delay': 'normal(5,3)'}  
+                                            'synMech': 'AMPA', 'weight': 0.1, 'delay': '2+normal(5,3)'}  
 netParams.stimTargetParams['bgI->PV'] = {'source': 'background_E', 'conds': {'cellType': ['PV']}, 
-                                            'synMech': 'NMDA', 'weight': 0.05, 'delay': 'normal(5,3)'}  
+                                            'synMech': 'AMPA', 'weight': 0.05, 'delay': '2+normal(5,3)'}  
 netParams.stimTargetParams['bgI->SOM'] = {'source': 'background_E', 'conds': {'cellType': ['SOM']}, 
-                                            'synMech': 'NMDA', 'weight': 0.03, 'delay': 'normal(5,3)'}  
+                                            'synMech': 'AMPA', 'weight': 0.03, 'delay': '2+normal(5,3)'}  
 
 # List of connectivity rules/params
 netParams.ItoIweight = 0.5
