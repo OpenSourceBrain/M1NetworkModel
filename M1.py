@@ -55,8 +55,8 @@ simConfig.saveHDF5 = False # save to HDF5 file
 
 
 # Analysis and plotting 
-simConfig.analysis['plotRaster'] = {'orderInverse': True, 'marker': '.', 'dpi': 300, 'saveFig': 'raster.png'} # Whether or not to plot a raster
-simConfig.analysis['plotTraces'] = {'include': [('IT_L23',2),('IT_L5A',2), ('PT_L5B',2), ('PV_L23',2)]} # plot recorded traces for this list of cells
+simConfig.analysis['plotRaster'] = {'orderInverse': True, 'figSize': (12,10), 'lw': 0.3,'markerSize':6, 'marker': '.', 'dpi': 300, 'saveFig': 'raster.png'} # Whether or not to plot a raster
+simConfig.analysis['plotTraces'] = {'include': [('IT_L23',10),('IT_L5A',10), ('PT_L5B',10), ('PV_L23',5)]} # plot recorded traces for this list of cells
 simConfig.analysis['plot2Dnet'] = {'showConns': False}
 
 
@@ -67,12 +67,12 @@ simConfig.analysis['plot2Dnet'] = {'showConns': False}
 
 # General network parameters
 netParams.scale = 1 # Scale factor for number of cells
-netParams.sizeX = 30 # x-dimension (horizontal length) size in um
+netParams.sizeX = 300 # x-dimension (horizontal length) size in um
 netParams.sizeY = 1350 # y-dimension (vertical height or cortical depth) size in um
-netParams.sizeZ = 30 # z-dimension (horizontal depth) size in um
+netParams.sizeZ = 300 # z-dimension (horizontal depth) size in um
 
 ## General connectivity parameters
-netParams.scaleConnWeight = 0.01 # Connection weight scale factor
+netParams.scaleConnWeight = 0.0003 # Connection weight scale factor
 netParams.scaleConnWeightNetStims = 0.25 # Connection weight scale factor for NetStims
 netParams.defaultDelay = 2.0 # default conn delay (ms)
 netParams.propVelocity = 100.0 # propagation velocity (um/ms)
@@ -145,13 +145,13 @@ netParams.synMechParams['GABAB'] = {'mod': 'Exp2Syn', 'tau1': 0.07, 'tau2': 9.1,
 
 
 # Stimulation parameters
-netParams.stimSourceParams['background_E']  = {'type': 'NetStim', 'rate': 20, 'noise': 1.0} # background inputs to Exc
-netParams.stimSourceParams['background_I']  = {'type': 'NetStim', 'rate': 20, 'noise': 1.0} # background inputs to Inh
+netParams.stimSourceParams['background_E']  = {'type': 'NetStim', 'rate': 10, 'noise': 1.0} # background inputs to Exc
+netParams.stimSourceParams['background_I']  = {'type': 'NetStim', 'rate': 10, 'noise': 1.0} # background inputs to Inh
 
 netParams.stimTargetParams['bgE->IT,CT'] = {'source': 'background_E', 'conds': {'cellType': ['IT','CT']}, 
                                             'synMech': 'AMPA', 'weight': 0.1, 'delay': '2+normal(5,3)'}  
 netParams.stimTargetParams['bgE->PT'] = {'source': 'background_E', 'conds': {'cellType': ['PT']}, 
-                                            'synMech': 'AMPA', 'weight': 0.1, 'delay': '2+normal(5,3)'}  
+                                            'synMech': 'AMPA', 'weight': 0.15, 'delay': '2+normal(5,3)'}  
 netParams.stimTargetParams['bgI->PV'] = {'source': 'background_E', 'conds': {'cellType': ['PV']}, 
                                             'synMech': 'AMPA', 'weight': 0.05, 'delay': '2+normal(5,3)'}  
 netParams.stimTargetParams['bgI->SOM'] = {'source': 'background_E', 'conds': {'cellType': ['SOM']}, 
