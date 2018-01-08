@@ -8,6 +8,7 @@ np.stimSourceParams['background_I']['noise'] = 1
 
 sim.createExportNeuroML2(netParams = np, 
                        simConfig = M1.simConfig,
-                       reference = 'M1',
+                       reference = 'M1_100percent',
                        connections=True,
-                       stimulations=True)  # create and export network to NeuroML 2
+                       stimulations=True,
+                       format='hdf5')  # create and export network to NeuroML 2
