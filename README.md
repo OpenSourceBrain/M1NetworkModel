@@ -40,3 +40,5 @@ The simulation should produce a raster plot with 224,173 spikes (avg rate of 20.
 
 For further information please contact: salvadordura@gmail.com or p.gleeson@ucl.ac.uk
 
+[![Build Status](https://travis-ci.org/OpenSourceBrain/M1NetworkModel.svg?branch=master)](https://travis-ci.org/OpenSourceBrain/M1NetworkModel)
+

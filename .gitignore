@@ -1,0 +1,15 @@
+/*.mod
+/LEMS_M1.xml
+/*netpyne.py
+/*_main.json
+/M1*.png
+/*.pov
+*.pyc
+*.dat
+x86_64
+*_nrn.py
+/M1.net.nml
+/LEMS_M1_10percent.xml
+/LEMS_M1_25percent.xml
+/LEMS_M1_100percent.xml
+/M1.py0

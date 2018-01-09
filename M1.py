@@ -9,6 +9,7 @@ Contributors: salvadordura@gmail.com
 """
 
 from netpyne import specs
+import math
 
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
 simConfig = specs.SimConfig()   # object of class SimConfig to store the simulation configuration
@@ -67,9 +68,9 @@ simConfig.analysis['plot2Dnet'] = {'showConns': False}
 
 # General network parameters
 netParams.scale = 1 # Scale factor for number of cells
-netParams.sizeX = 300 # x-dimension (horizontal length) size in um
+netParams.sizeX = 300*math.sqrt(netParams.scale) # x-dimension (horizontal length) size in um
 netParams.sizeY = 1350 # y-dimension (vertical height or cortical depth) size in um
-netParams.sizeZ = 300 # z-dimension (horizontal depth) size in um
+netParams.sizeZ = 300*math.sqrt(netParams.scale) # z-dimension (horizontal depth) size in um
 
 ## General connectivity parameters
 netParams.scaleConnWeight = 0.0003 # Connection weight scale factor
