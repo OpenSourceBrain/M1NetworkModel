@@ -7,6 +7,7 @@ addons:
      - python-tk
      - python-lxml 
      - python-scipy 
+     - python-tornado
      - python-matplotlib 
     
 
