@@ -20,6 +20,7 @@ virtualenv:
 
 
 env:
+    - OMV_ENGINE=NetPyNE
     - OMV_ENGINE=jNeuroML
     - OMV_ENGINE=jNeuroML_NEURON
     - OMV_ENGINE=jNeuroML_NetPyNE
