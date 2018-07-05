@@ -6,7 +6,7 @@ The code requires the [netpyne package](https://github.com/Neurosim-lab/netpyne)
 
 Additional details of the modelling framework and M1 model can be found here:
 
-* [SFN'15 poster](http://neurosimlab.org/salvadord/sfn15-sal-final.pdf)
+* [SFN'15 poster](http://it.neurosim.downstate.edu/salvadord/sfn15-sal-final.pdf)
 * [slides](https://drive.google.com/file/d/0B8v-knmZRjhtVl9BOFY2bzlWSWs/view?usp=sharing)       
  
 The parameter file **M1.py** describes a mouse M1 model with 14 populations; size 300um x 300um x 1350um, has 10,734 Izhikevich cells, 5,029,610 synapses, and cortical depth-dependent connectivity based on multiple published experimental studies.
