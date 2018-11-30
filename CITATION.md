@@ -4,10 +4,5 @@ The software in this repository is provided under the terms of the [software lic
 
 If you use this model in your research, we respectfully ask you to cite:
 
-**The original publication upon which this model is based**
-
-   - FitzHugh R. [1969]: Mathematical models of excitation and propagation in nerve. Chapter 1 (pp. 1–85 in H.P. Schwan, ed. Biological Engineering, McGraw–Hill Book Co., N.Y.).
-
-**The latest release of this Open Source Brain repository**
-
-   - This link should provide a DOI/citation for the latest version released: https://doi.org/10.5281/zenodo.1493384. If you would like us to make a new release, please [open an issue](../../issues). 
+**NetPyNE: a tool for data-driven multiscale modeling of brain circuits**, Salvador Dura-Bernal, Benjamin Suter, Padraig Gleeson, Matteo Cantarelli, Adrian Quintana, Facundo Rodriguez, David J Kedziora, George L Chadderdon, Cliff C Kerr, Samuel A Neymotin, Robert McDougal, Michael Hines, Gordon MG Shepherd, William W Lytton
+bioRxiv 461137; doi: https://doi.org/10.1101/461137 
