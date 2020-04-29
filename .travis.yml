@@ -1,22 +1,20 @@
-sudo: false
+# Framework for running automated tests on OSB using Travis-CI, see https://github.com/OpenSourceBrain/osb-model-validation
+
+dist: xenial
 
 addons:
-   apt:
-     packages:
-     # Requirements for NetPyNE & libNeuroML
-     - python-tk
-     - python-lxml 
-     - python-scipy 
-     - python-tornado
-     - python-matplotlib 
-    
+  apt:
+    packages:
+    - python-matplotlib 
+    - python-tk
+    - python-numpy 
+    - python-scipy 
+    - python-lxml
+    - python-tornado
+    - python-tables
 
 language: python
-python: 2.7
-
- 
-virtualenv:
-   system_site_packages: true
+python: 3.6
 
 
 env:
@@ -31,7 +29,7 @@ install:
 
 script:
     - omv all -V
+    - omv list -V 
     
-    
-    
+
 
