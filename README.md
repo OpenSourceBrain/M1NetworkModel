@@ -1,7 +1,7 @@
 ## M1 Network Model
 [![Continuous build using OMV](https://github.com/OpenSourceBrain/M1NetworkModel/actions/workflows/omv-ci.yml/badge.svg)](https://github.com/OpenSourceBrain/M1NetworkModel/actions/workflows/omv-ci.yml)
 ### Description
-A multiscale model of mouse primary motor cortex (M1).
+A multiscale model of mouse primary motor cortex (M1). **Note: updated versions of this model exist, see http://netpyne.org**.
 
 The code requires the [netpyne package](https://github.com/Neurosim-lab/netpyne), a NEURON/Python-based modularized framework for network simulations with MPI. Using this modularized structure, user can define different models (including cell types, populations, connectivities, etc.) just by modifying a single parameters file. 
 
